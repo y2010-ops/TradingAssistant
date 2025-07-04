@@ -16,7 +16,8 @@ import {
   PieChart,
   LineChart as LineChartIcon,
   Activity,
-  Laptop
+  Laptop,
+  Brain
 } from 'lucide-react';
 import AuthModal from '../components/auth/AuthModal';
 
