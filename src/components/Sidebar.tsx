@@ -6,8 +6,6 @@ import {
   TrendingUp, 
   Heart, 
   Settings, 
-  BookOpen,
-  Target,
   PieChart,
   X
 } from 'lucide-react';
@@ -24,8 +22,6 @@ const menuItems = [
   { id: 'chat', label: 'AI Assistant', icon: MessageCircle, description: 'Trading Advisor' },
   { id: 'sentiment', label: 'Sentiment', icon: Heart, description: 'Market Sentiment' },
   { id: 'portfolio', label: 'Portfolio', icon: PieChart, description: 'Your Holdings' },
-  { id: 'signals', label: 'Signals', icon: Target, description: 'Trading Signals' },
-  { id: 'education', label: 'Education', icon: BookOpen, description: 'Learning Hub' },
   { id: 'settings', label: 'Settings', icon: Settings, description: 'Preferences' },
 ];
 
