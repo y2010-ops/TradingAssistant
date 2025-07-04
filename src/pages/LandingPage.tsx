@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
-  Brain, 
+  BarChart2, 
   TrendingUp, 
   Shield, 
   Zap, 
@@ -11,8 +11,12 @@ import {
   Users,
   Star,
   CheckCircle,
-  ArrowRight,
-  Play
+  ArrowRight, 
+  Play,
+  PieChart,
+  LineChart as LineChartIcon,
+  Activity,
+  Laptop
 } from 'lucide-react';
 import AuthModal from '../components/auth/AuthModal';
 
@@ -99,7 +103,13 @@ const LandingPage: React.FC = () => {
     <div className="min-h-screen bg-white dark:bg-gray-900">
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-        <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiMzMTgyRjYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDM0aDR2MWgtNHYtMXptMC0yaDF2NGgtMXYtNHptLTUgMmg0djFoLTR2LTF6bTAgMmgxdi00aC0xdjR6TTI0IDMwaDR2MWgtNHYtMXptMC0yaDF2NGgtMXYtNHptLTUgMmg0djFoLTR2LTF6bTAgMmgxdi00aC0xdjR6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-20"></div>
+        
+        {/* Decorative elements */}
+        <div className="absolute top-20 left-10 w-64 h-64 bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob"></div>
+        <div className="absolute top-40 right-10 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-2000"></div>
+        <div className="absolute bottom-20 left-1/3 w-72 h-72 bg-pink-400 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-4000"></div>
+        
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
           <div className="text-center">
             <motion.div
@@ -109,14 +119,22 @@ const LandingPage: React.FC = () => {
               className="mb-8"
             >
               <div className="inline-flex items-center px-4 py-2 bg-blue-100 dark:bg-blue-900/30 rounded-full text-blue-700 dark:text-blue-300 text-sm font-medium mb-6">
-                <Zap className="w-4 h-4 mr-2" />
-                Powered by Advanced AI Technology
+                <motion.div
+                  animate={{ rotate: [0, 15, 0, -15, 0] }}
+                  transition={{ repeat: Infinity, duration: 2 }}
+                >
+                  <Zap className="w-4 h-4 mr-2" />
+                </motion.div>
+                <span>Powered by Advanced AI Technology</span>
               </div>
               
-              <h1 className="text-5xl md:text-7xl font-bold text-gray-900 dark:text-white mb-6">
-                Trade Smarter with{' '}
-                <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                  AI Intelligence
+              <h1 className="text-5xl md:text-7xl font-bold mb-6">
+                <span className="text-gray-900 dark:text-white">Trade Smarter with </span>
+                <span className="relative">
+                  <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                    AI Intelligence
+                  </span>
+                  <span className="absolute -inset-1 bg-gradient-to-r from-blue-600/20 to-purple-600/20 blur-xl opacity-50 dark:opacity-30"></span>
                 </span>
               </h1>
               
@@ -132,18 +150,27 @@ const LandingPage: React.FC = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
             >
-              <button
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => openAuthModal('signup')}
-                className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-200 shadow-lg"
+                className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg relative group"
               >
-                Start Trading with AI
-                <ArrowRight className="w-5 h-5 ml-2 inline" />
-              </button>
+                <span className="relative z-10 flex items-center justify-center">
+                  Start Trading with AI
+                  <ArrowRight className="w-5 h-5 ml-2 inline group-hover:translate-x-1 transition-transform" />
+                </span>
+                <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-600/80 to-purple-600/80 blur-md opacity-0 group-hover:opacity-70 transition-opacity"></span>
+              </motion.button>
               
-              <button className="px-8 py-4 border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-semibold rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200 flex items-center justify-center">
-                <Play className="w-5 h-5 mr-2" />
-                Watch Demo
-              </button>
+              <motion.button 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-4 border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-semibold rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200 flex items-center justify-center group"
+              >
+                <Play className="w-5 h-5 mr-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors" />
+                <span className="group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Watch Demo</span>
+              </motion.button>
             </motion.div>
 
             {/* Stats */}
@@ -154,17 +181,64 @@ const LandingPage: React.FC = () => {
               className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto"
             >
               {stats.map((stat, index) => (
-                <div key={index} className="text-center">
-                  <div className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">
+                <motion.div 
+                  key={index} 
+                  className="text-center"
+                  whileHover={{ y: -5 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
                     {stat.number}
                   </div>
                   <div className="text-gray-600 dark:text-gray-400">
                     {stat.label}
                   </div>
-                </div>
+                </motion.div>
               ))}
             </motion.div>
           </div>
+          
+          {/* Dashboard Preview */}
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="mt-16 relative max-w-5xl mx-auto"
+          >
+            <div className="relative">
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl blur-xl opacity-50"></div>
+              <div className="relative bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden border border-gray-200 dark:border-gray-700">
+                <img 
+                  src="https://images.pexels.com/photos/7567443/pexels-photo-7567443.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
+                  alt="AI Trading Dashboard" 
+                  className="w-full h-auto rounded-t-2xl"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end">
+                  <div className="p-6 text-white">
+                    <h3 className="text-2xl font-bold mb-2">Powerful Analytics Dashboard</h3>
+                    <p className="text-gray-200">Real-time market data with AI-powered insights</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Floating elements */}
+            <motion.div 
+              className="absolute -top-10 -right-10 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-3 border border-gray-200 dark:border-gray-700"
+              animate={{ y: [0, -10, 0] }}
+              transition={{ repeat: Infinity, duration: 3 }}
+            >
+              <PieChart className="w-10 h-10 text-blue-600" />
+            </motion.div>
+            
+            <motion.div 
+              className="absolute -bottom-8 -left-8 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-3 border border-gray-200 dark:border-gray-700"
+              animate={{ y: [0, 10, 0] }}
+              transition={{ repeat: Infinity, duration: 4, delay: 1 }}
+            >
+              <LineChartIcon className="w-10 h-10 text-purple-600" />
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
@@ -172,9 +246,22 @@ const LandingPage: React.FC = () => {
       <section className="py-20 bg-gray-50 dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-              Powerful Features for Smart Trading
-            </h2>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <h2 className="text-4xl md:text-5xl font-bold mb-6">
+                <span className="text-gray-900 dark:text-white">Powerful Features for </span>
+                <span className="relative">
+                  <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                    Smart Trading
+                  </span>
+                  <span className="absolute -inset-1 bg-gradient-to-r from-blue-600/20 to-purple-600/20 blur-xl opacity-50 dark:opacity-30"></span>
+                </span>
+              </h2>
+            </motion.div>
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
               Our AI-powered platform combines cutting-edge technology with market expertise 
               to give you the edge you need in today's competitive trading environment.
@@ -184,26 +271,142 @@ const LandingPage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((feature, index) => {
               const Icon = feature.icon;
+              
               return (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
+                  whileHover={{ y: -10 }}
+                  className="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 relative group"
                 >
-                  <div className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${feature.color} flex items-center justify-center mb-6`}>
-                    <Icon className="w-8 h-8 text-white" />
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-600/30 to-purple-600/30 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-300"></div>
+                  <div className="relative">
+                    <div className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${feature.color} flex items-center justify-center mb-6 relative`}>
+                      <div className="absolute inset-0 rounded-2xl bg-white dark:bg-gray-900 opacity-0 group-hover:opacity-10 transition-opacity"></div>
+                      <Icon className="w-8 h-8 text-white" />
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+                      {feature.title}
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-300">
+                      {feature.description}
+                    </p>
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
-                    {feature.title}
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-300">
-                    {feature.description}
-                  </p>
                 </motion.div>
               );
             })}
+          </div>
+          
+          {/* Feature Showcase */}
+          <div className="mt-24 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+                Advanced Technical Analysis
+              </h3>
+              <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
+                Our platform provides comprehensive technical analysis with over 50+ indicators, pattern recognition, and AI-powered trend detection.
+              </p>
+              <ul className="space-y-4">
+                {[
+                  { icon: BarChart2, text: "Real-time price charts with multiple timeframes" },
+                  { icon: Activity, text: "Advanced indicators (RSI, MACD, Bollinger Bands)" },
+                  { icon: Target, text: "Automatic support/resistance level detection" }
+                ].map((item, i) => {
+                  const ItemIcon = item.icon;
+                  return (
+                    <li key={i} className="flex items-start">
+                      <div className="mt-1 bg-blue-100 dark:bg-blue-900/30 p-1 rounded-md">
+                        <ItemIcon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                      </div>
+                      <span className="ml-3 text-gray-700 dark:text-gray-300">{item.text}</span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="relative"
+            >
+              <div className="absolute -inset-1 bg-gradient-to-r from-blue-600/30 to-purple-600/30 rounded-2xl blur-xl"></div>
+              <div className="relative bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-200 dark:border-gray-700">
+                <img 
+                  src="https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
+                  alt="Technical Analysis Dashboard" 
+                  className="w-full h-auto"
+                />
+              </div>
+              <div className="absolute -bottom-6 -right-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-3 border border-gray-200 dark:border-gray-700">
+                <BarChart3 className="w-10 h-10 text-green-600" />
+              </div>
+            </motion.div>
+          </div>
+          
+          {/* Second Feature Showcase (reversed) */}
+          <div className="mt-24 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="relative order-2 lg:order-1"
+            >
+              <div className="absolute -inset-1 bg-gradient-to-r from-purple-600/30 to-pink-600/30 rounded-2xl blur-xl"></div>
+              <div className="relative bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-200 dark:border-gray-700">
+                <img 
+                  src="https://images.pexels.com/photos/7567473/pexels-photo-7567473.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
+                  alt="AI Trading Assistant" 
+                  className="w-full h-auto"
+                />
+              </div>
+              <div className="absolute -top-6 -left-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-3 border border-gray-200 dark:border-gray-700">
+                <MessageCircle className="w-10 h-10 text-purple-600" />
+              </div>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="order-1 lg:order-2"
+            >
+              <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+                AI-Powered Trading Assistant
+              </h3>
+              <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
+                Our intelligent chat assistant helps you make informed trading decisions with natural language processing and contextual market understanding.
+              </p>
+              <ul className="space-y-4">
+                {[
+                  { icon: BarChart2, text: "Ask questions about any stock or market trend" },
+                  { icon: Activity, text: "Get personalized trading recommendations" },
+                  { icon: Target, text: "Receive real-time alerts and notifications" }
+                ].map((item, i) => {
+                  const ItemIcon = item.icon;
+                  return (
+                    <li key={i} className="flex items-start">
+                      <div className="mt-1 bg-purple-100 dark:bg-purple-900/30 p-1 rounded-md">
+                        <ItemIcon className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                      </div>
+                      <span className="ml-3 text-gray-700 dark:text-gray-300">{item.text}</span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -212,9 +415,22 @@ const LandingPage: React.FC = () => {
       <section className="py-20 bg-white dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-              Trusted by Thousands of Traders
-            </h2>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <h2 className="text-4xl md:text-5xl font-bold mb-6">
+                <span className="text-gray-900 dark:text-white">Trusted by </span>
+                <span className="relative">
+                  <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                    Thousands of Traders
+                  </span>
+                  <span className="absolute -inset-1 bg-gradient-to-r from-blue-600/20 to-purple-600/20 blur-xl opacity-50 dark:opacity-30"></span>
+                </span>
+              </h2>
+            </motion.div>
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
               See what our users are saying about their trading success with our AI platform.
             </p>
@@ -223,12 +439,16 @@ const LandingPage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
               <motion.div
+                whileHover={{ y: -10 }}
                 key={index}
                 initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.2 }}
-                className="bg-gray-50 dark:bg-gray-800 rounded-2xl p-8"
+                className="bg-gray-50 dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 relative group"
               >
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-600/20 to-purple-600/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-300"></div>
+                <div className="relative">
                 <div className="flex items-center mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => (
                     <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
@@ -252,9 +472,44 @@ const LandingPage: React.FC = () => {
                     </div>
                   </div>
                 </div>
+                </div>
               </motion.div>
             ))}
           </div>
+          
+          {/* Laptop View */}
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="mt-20 relative max-w-5xl mx-auto"
+          >
+            <div className="absolute -inset-1 bg-gradient-to-r from-blue-600/30 to-purple-600/30 rounded-2xl blur-xl"></div>
+            <div className="relative bg-gradient-to-b from-gray-900 to-gray-800 rounded-2xl shadow-2xl overflow-hidden border border-gray-700 p-8 pt-10">
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex space-x-2">
+                  <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                  <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                  <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Laptop className="w-5 h-5 text-gray-400" />
+                  <span className="text-sm text-gray-400">AI Trading Dashboard</span>
+                </div>
+              </div>
+              <img 
+                src="https://images.pexels.com/photos/6770610/pexels-photo-6770610.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
+                alt="Trading Dashboard on Laptop" 
+                className="w-full h-auto rounded-lg shadow-lg"
+              />
+              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-1">
+                <div className="w-16 h-1 rounded-full bg-white/30"></div>
+                <div className="w-4 h-1 rounded-full bg-white/10"></div>
+                <div className="w-4 h-1 rounded-full bg-white/10"></div>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -262,13 +517,18 @@ const LandingPage: React.FC = () => {
       <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.6 }}
+            className="relative"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              Ready to Transform Your Trading?
-            </h2>
+            <div className="absolute -inset-1 bg-white/20 blur-3xl opacity-30 rounded-full"></div>
+            <div className="relative">
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+                Ready to Transform Your Trading?
+              </h2>
+            </div>
             <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
               Join thousands of successful traders who are already using AI to make smarter investment decisions.
             </p>
@@ -276,17 +536,21 @@ const LandingPage: React.FC = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button
                 onClick={() => openAuthModal('signup')}
-                className="px-8 py-4 bg-white text-blue-600 font-semibold rounded-xl hover:bg-gray-100 transform hover:scale-105 transition-all duration-200 shadow-lg"
+                className="px-8 py-4 bg-white text-blue-600 font-semibold rounded-xl hover:bg-gray-100 transition-all duration-200 shadow-lg relative group"
               >
-                Get Started Free
-                <ArrowRight className="w-5 h-5 ml-2 inline" />
+                <span className="relative z-10 flex items-center">
+                  Get Started Free
+                  <ArrowRight className="w-5 h-5 ml-2 inline group-hover:translate-x-1 transition-transform" />
+                </span>
+                <span className="absolute inset-0 rounded-xl bg-white/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity"></span>
               </button>
               
               <button
                 onClick={() => openAuthModal('signin')}
-                className="px-8 py-4 border-2 border-white text-white font-semibold rounded-xl hover:bg-white hover:text-blue-600 transition-all duration-200"
+                className="px-8 py-4 border-2 border-white text-white font-semibold rounded-xl hover:bg-white hover:text-blue-600 transition-all duration-200 relative group"
               >
-                Sign In
+                <span className="relative z-10">Sign In</span>
+                <span className="absolute inset-0 rounded-xl bg-white/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity"></span>
               </button>
             </div>
 
@@ -312,10 +576,17 @@ const LandingPage: React.FC = () => {
       <footer className="bg-gray-900 text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="col-span-1 md:col-span-2">
-              <div className="flex items-center mb-4">
-                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center mr-3">
-                  <Brain className="w-6 h-6 text-white" />
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="col-span-1 md:col-span-2"
+            >
+              <div className="flex items-center mb-4 relative">
+                <div className="absolute -inset-1 bg-gradient-to-r from-blue-600/50 to-purple-600/50 rounded-lg blur-lg opacity-70"></div>
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center mr-3 relative">
+                  <BarChart2 className="w-6 h-6 text-white" />
                 </div>
                 <span className="text-xl font-bold">AI Trading Assistant</span>
               </div>
@@ -327,9 +598,14 @@ const LandingPage: React.FC = () => {
                 <Users className="w-5 h-5 text-gray-400" />
                 <span className="text-gray-400">50,000+ Active Users</span>
               </div>
-            </div>
+            </motion.div>
             
-            <div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
               <h3 className="font-semibold mb-4">Product</h3>
               <ul className="space-y-2 text-gray-400">
                 <li><a href="#" className="hover:text-white transition-colors">Features</a></li>
@@ -337,9 +613,14 @@ const LandingPage: React.FC = () => {
                 <li><a href="#" className="hover:text-white transition-colors">API</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Documentation</a></li>
               </ul>
-            </div>
+            </motion.div>
             
-            <div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
               <h3 className="font-semibold mb-4">Support</h3>
               <ul className="space-y-2 text-gray-400">
                 <li><a href="#" className="hover:text-white transition-colors">Help Center</a></li>
@@ -347,12 +628,18 @@ const LandingPage: React.FC = () => {
                 <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Terms of Service</a></li>
               </ul>
-            </div>
+            </motion.div>
           </div>
           
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400"
+          >
             <p>&copy; 2024 AI Trading Assistant. All rights reserved.</p>
-          </div>
+          </motion.div>
         </div>
       </footer>
 
@@ -365,5 +652,29 @@ const LandingPage: React.FC = () => {
     </div>
   );
 };
+
+// Add animation keyframes for blob animation
+const style = document.createElement('style');
+style.innerHTML = `
+@keyframes blob {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(20px, -20px) scale(1.1); }
+  50% { transform: translate(0, 20px) scale(0.9); }
+  75% { transform: translate(-20px, -10px) scale(1.05); }
+}
+
+.animate-blob {
+  animation: blob 10s infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+`;
+document.head.appendChild(style);
 
 export default LandingPage;
