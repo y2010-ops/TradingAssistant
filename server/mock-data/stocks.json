@@ -1,0 +1,1002 @@
+[
+  {
+    "symbol": "RELIANCE",
+    "name": "Reliance Industries Limited",
+    "sector": "Energy",
+    "currentPrice": 2456.75,
+    "change": 45.3,
+    "changePercent": 1.88,
+    "volume": 12500000,
+    "marketCap": 1650000
+  },
+  {
+    "symbol": "TCS",
+    "name": "Tata Consultancy Services",
+    "sector": "IT",
+    "currentPrice": 3234.5,
+    "change": -23.45,
+    "changePercent": -0.72,
+    "volume": 8500000,
+    "marketCap": 1200000
+  },
+  {
+    "symbol": "HDFCBANK",
+    "name": "HDFC Bank Limited",
+    "sector": "Banking",
+    "currentPrice": 1567.25,
+    "change": 34.2,
+    "changePercent": 2.23,
+    "volume": 15000000,
+    "marketCap": 850000
+  },
+  {
+    "symbol": "INFY",
+    "name": "Infosys Limited",
+    "sector": "IT",
+    "currentPrice": 1432.8,
+    "change": -12.65,
+    "changePercent": -0.87,
+    "volume": 9500000,
+    "marketCap": 720000
+  },
+  {
+    "symbol": "ITC",
+    "name": "ITC Limited",
+    "sector": "FMCG",
+    "currentPrice": 456.9,
+    "change": 8.45,
+    "changePercent": 1.89,
+    "volume": 18000000,
+    "marketCap": 580000
+  },
+  {
+    "symbol": "SBIN",
+    "name": "State Bank of India",
+    "sector": "Banking",
+    "currentPrice": 598.75,
+    "change": 8.9,
+    "changePercent": 1.51,
+    "volume": 22000000,
+    "marketCap": 520000
+  },
+  {
+    "symbol": "KOTAKBANK",
+    "name": "Kotak Mahindra Bank",
+    "sector": "Banking",
+    "currentPrice": 1756.8,
+    "change": -15.3,
+    "changePercent": -0.86,
+    "volume": 4500000,
+    "marketCap": 350000
+  },
+  {
+    "symbol": "BHARTIARTL",
+    "name": "Bharti Airtel Limited",
+    "sector": "Telecom",
+    "currentPrice": 876.45,
+    "change": 12.6,
+    "changePercent": 1.46,
+    "volume": 8900000,
+    "marketCap": 485000
+  },
+  {
+    "symbol": "ASIANPAINT",
+    "name": "Asian Paints Limited",
+    "sector": "Consumer Durables",
+    "currentPrice": 3245.6,
+    "change": -45.8,
+    "changePercent": -1.39,
+    "volume": 3200000,
+    "marketCap": 310000
+  },
+  {
+    "symbol": "HCLTECH",
+    "name": "HCL Technologies Limited",
+    "sector": "IT",
+    "currentPrice": 1234.5,
+    "change": 18.75,
+    "changePercent": 1.54,
+    "volume": 5600000,
+    "marketCap": 335000
+  },
+  {
+    "symbol": "BAJFINANCE",
+    "name": "Bajaj Finance Limited",
+    "sector": "Financial Services",
+    "currentPrice": 6845.3,
+    "change": -89.5,
+    "changePercent": -1.29,
+    "volume": 2800000,
+    "marketCap": 425000
+  },
+  {
+    "symbol": "MARUTI",
+    "name": "Maruti Suzuki India Limited",
+    "sector": "Automobile",
+    "currentPrice": 9876.5,
+    "change": 123.45,
+    "changePercent": 1.27,
+    "volume": 1200000,
+    "marketCap": 298000
+  },
+  {
+    "symbol": "TATASTEEL",
+    "name": "Tata Steel Limited",
+    "sector": "Metals",
+    "currentPrice": 134.55,
+    "change": 2.35,
+    "changePercent": 1.78,
+    "volume": 25000000,
+    "marketCap": 165000
+  },
+  {
+    "symbol": "AXISBANK",
+    "name": "Axis Bank Limited",
+    "sector": "Banking",
+    "currentPrice": 987.65,
+    "change": -5.45,
+    "changePercent": -0.55,
+    "volume": 9800000,
+    "marketCap": 305000
+  },
+  {
+    "symbol": "WIPRO",
+    "name": "Wipro Limited",
+    "sector": "IT",
+    "currentPrice": 432.1,
+    "change": 5.6,
+    "changePercent": 1.31,
+    "volume": 7600000,
+    "marketCap": 236000
+  },
+  {
+    "symbol": "SUNPHARMA",
+    "name": "Sun Pharmaceutical Industries Limited",
+    "sector": "Pharmaceuticals",
+    "currentPrice": 1023.45,
+    "change": 15.65,
+    "changePercent": 1.55,
+    "volume": 4300000,
+    "marketCap": 245000
+  },
+  {
+    "symbol": "ICICIBANK",
+    "name": "ICICI Bank Limited",
+    "sector": "Banking",
+    "currentPrice": 945.3,
+    "change": 12.4,
+    "changePercent": 1.33,
+    "volume": 14500000,
+    "marketCap": 660000
+  },
+  {
+    "symbol": "HINDUNILVR",
+    "name": "Hindustan Unilever Limited",
+    "sector": "FMCG",
+    "currentPrice": 2543.2,
+    "change": -23.5,
+    "changePercent": -0.91,
+    "volume": 2300000,
+    "marketCap": 598000
+  },
+  {
+    "symbol": "ULTRACEMCO",
+    "name": "UltraTech Cement Limited",
+    "sector": "Cement",
+    "currentPrice": 8765.4,
+    "change": 98.7,
+    "changePercent": 1.14,
+    "volume": 890000,
+    "marketCap": 253000
+  },
+  {
+    "symbol": "TATAMOTORS",
+    "name": "Tata Motors Limited",
+    "sector": "Automobile",
+    "currentPrice": 654.3,
+    "change": 23.45,
+    "changePercent": 3.72,
+    "volume": 18900000,
+    "marketCap": 218000
+  },
+  {
+    "symbol": "ADANIENT",
+    "name": "ADANIENT Corporation Ltd.",
+    "sector": "Cement",
+    "currentPrice": 1478,
+    "change": -17.05754857225748,
+    "changePercent": -1.1540966557684358,
+    "volume": 19979240,
+    "marketCap": 93053
+  },
+  {
+    "symbol": "ADANIPORTS",
+    "name": "ADANIPORTS Corporation Ltd.",
+    "sector": "IT",
+    "currentPrice": 465,
+    "change": 9.306111078761264,
+    "changePercent": 2.001314210486293,
+    "volume": 10367348,
+    "marketCap": 451912
+  },
+  {
+    "symbol": "APOLLOHOSP",
+    "name": "APOLLOHOSP Corporation Ltd.",
+    "sector": "Cement",
+    "currentPrice": 2176,
+    "change": 18.601749570086163,
+    "changePercent": 0.8548598148017539,
+    "volume": 11244839,
+    "marketCap": 94897
+  },
+  {
+    "symbol": "BAJAJFINSV",
+    "name": "BAJAJFINSV Corporation Ltd.",
+    "sector": "FMCG",
+    "currentPrice": 1457,
+    "change": 0.510418986010075,
+    "changePercent": 0.03503218847014928,
+    "volume": 19302019,
+    "marketCap": 104340
+  },
+  {
+    "symbol": "BPCL",
+    "name": "BPCL Corporation Ltd.",
+    "sector": "Auto",
+    "currentPrice": 478,
+    "change": -6.759899497305017,
+    "changePercent": -1.4142049157541876,
+    "volume": 14649415,
+    "marketCap": 55057
+  },
+  {
+    "symbol": "BRITANNIA",
+    "name": "BRITANNIA Corporation Ltd.",
+    "sector": "Cement",
+    "currentPrice": 957,
+    "change": 1.6411237185874394,
+    "changePercent": 0.17148628198405846,
+    "volume": 18585356,
+    "marketCap": 188408
+  },
+  {
+    "symbol": "CIPLA",
+    "name": "CIPLA Corporation Ltd.",
+    "sector": "Cement",
+    "currentPrice": 2006,
+    "change": 19.60191899910575,
+    "changePercent": 0.9771644565855309,
+    "volume": 9869364,
+    "marketCap": 314183
+  },
+  {
+    "symbol": "COALINDIA",
+    "name": "COALINDIA Corporation Ltd.",
+    "sector": "Cement",
+    "currentPrice": 4052,
+    "change": -18.169580488822017,
+    "changePercent": -0.4484101798820833,
+    "volume": 9877629,
+    "marketCap": 76479
+  },
+  {
+    "symbol": "DIVISLAB",
+    "name": "DIVISLAB Corporation Ltd.",
+    "sector": "Telecom",
+    "currentPrice": 1256,
+    "change": 24.982166861186922,
+    "changePercent": 1.9890260239798503,
+    "volume": 5739594,
+    "marketCap": 350526
+  },
+  {
+    "symbol": "DRREDDY",
+    "name": "DRREDDY Corporation Ltd.",
+    "sector": "Metals",
+    "currentPrice": 3507,
+    "change": -20.856612036044766,
+    "changePercent": -0.5947137734828847,
+    "volume": 11822020,
+    "marketCap": 248987
+  },
+  {
+    "symbol": "EICHERMOT",
+    "name": "EICHERMOT Corporation Ltd.",
+    "sector": "Cement",
+    "currentPrice": 2651,
+    "change": 22.148619944450783,
+    "changePercent": 0.8354817029215686,
+    "volume": 10248089,
+    "marketCap": 309668
+  },
+  {
+    "symbol": "GRASIM",
+    "name": "GRASIM Corporation Ltd.",
+    "sector": "Telecom",
+    "currentPrice": 1628,
+    "change": -12.643410715893289,
+    "changePercent": -0.776622279846025,
+    "volume": 16934802,
+    "marketCap": 358109
+  },
+  {
+    "symbol": "HEROMOTOCO",
+    "name": "HEROMOTOCO Corporation Ltd.",
+    "sector": "Banking",
+    "currentPrice": 2472,
+    "change": -23.360187649978002,
+    "changePercent": -0.9449914097887542,
+    "volume": 10412920,
+    "marketCap": 290933
+  },
+  {
+    "symbol": "HINDALCO",
+    "name": "HINDALCO Corporation Ltd.",
+    "sector": "Energy",
+    "currentPrice": 1076,
+    "change": -2.638003616539258,
+    "changePercent": -0.24516762235494965,
+    "volume": 10580026,
+    "marketCap": 200994
+  },
+  {
+    "symbol": "INDUSINDBK",
+    "name": "INDUSINDBK Corporation Ltd.",
+    "sector": "Telecom",
+    "currentPrice": 1345,
+    "change": -5.649192185090174,
+    "changePercent": -0.42001428885428804,
+    "volume": 20982306,
+    "marketCap": 102500
+  },
+  {
+    "symbol": "JSWSTEEL",
+    "name": "JSWSTEEL Corporation Ltd.",
+    "sector": "Energy",
+    "currentPrice": 3857,
+    "change": -13.553849444239924,
+    "changePercent": -0.35140911185480744,
+    "volume": 14902970,
+    "marketCap": 488051
+  },
+  {
+    "symbol": "LTIM",
+    "name": "LTIM Corporation Ltd.",
+    "sector": "Cement",
+    "currentPrice": 4452,
+    "change": 5.512945699321392,
+    "changePercent": 0.12383076593264583,
+    "volume": 17491755,
+    "marketCap": 165015
+  },
+  {
+    "symbol": "M&M",
+    "name": "M&M Corporation Ltd.",
+    "sector": "Cement",
+    "currentPrice": 3361,
+    "change": 2.4734073987283276,
+    "changePercent": 0.07359141323202403,
+    "volume": 17249453,
+    "marketCap": 426272
+  },
+  {
+    "symbol": "NESTLEIND",
+    "name": "NESTLEIND Corporation Ltd.",
+    "sector": "Real Estate",
+    "currentPrice": 2232,
+    "change": 15.922376020368079,
+    "changePercent": 0.7133681012709713,
+    "volume": 1964216,
+    "marketCap": 328708
+  },
+  {
+    "symbol": "NTPC",
+    "name": "NTPC Corporation Ltd.",
+    "sector": "Banking",
+    "currentPrice": 716,
+    "change": -18.145180801037448,
+    "changePercent": -2.534243128636515,
+    "volume": 4642006,
+    "marketCap": 390908
+  },
+  {
+    "symbol": "ONGC",
+    "name": "ONGC Corporation Ltd.",
+    "sector": "Energy",
+    "currentPrice": 5094,
+    "change": -15.517223395973556,
+    "changePercent": -0.3046176559869171,
+    "volume": 1531045,
+    "marketCap": 223086
+  },
+  {
+    "symbol": "POWERGRID",
+    "name": "POWERGRID Corporation Ltd.",
+    "sector": "Cement",
+    "currentPrice": 1974,
+    "change": -4.8079866620253044,
+    "changePercent": -0.24356568703269021,
+    "volume": 7966224,
+    "marketCap": 487212
+  },
+  {
+    "symbol": "SBILIFE",
+    "name": "SBILIFE Corporation Ltd.",
+    "sector": "Energy",
+    "currentPrice": 3758,
+    "change": 4.1935024711837965,
+    "changePercent": 0.11158867672122928,
+    "volume": 1436859,
+    "marketCap": 487505
+  },
+  {
+    "symbol": "SHREECEM",
+    "name": "SHREECEM Corporation Ltd.",
+    "sector": "Metals",
+    "currentPrice": 3915,
+    "change": 7.857661995404203,
+    "changePercent": 0.20070656437814055,
+    "volume": 3828090,
+    "marketCap": 435613
+  },
+  {
+    "symbol": "TATACONSUM",
+    "name": "TATACONSUM Corporation Ltd.",
+    "sector": "Metals",
+    "currentPrice": 2039,
+    "change": -5.035676049857224,
+    "changePercent": -0.24696792789883393,
+    "volume": 19420340,
+    "marketCap": 280400
+  },
+  {
+    "symbol": "TECHM",
+    "name": "TECHM Corporation Ltd.",
+    "sector": "FMCG",
+    "currentPrice": 1283,
+    "change": 4.842931429879877,
+    "changePercent": 0.3774693242306997,
+    "volume": 19031513,
+    "marketCap": 529549
+  },
+  {
+    "symbol": "TITAN",
+    "name": "TITAN Corporation Ltd.",
+    "sector": "Energy",
+    "currentPrice": 1055,
+    "change": 11.351673540290436,
+    "changePercent": 1.0759880132976718,
+    "volume": 11807890,
+    "marketCap": 369904
+  },
+  {
+    "symbol": "UPL",
+    "name": "UPL Corporation Ltd.",
+    "sector": "Real Estate",
+    "currentPrice": 824,
+    "change": 1.8055626115065393,
+    "changePercent": 0.21912167615370623,
+    "volume": 8390224,
+    "marketCap": 201380
+  },
+  {
+    "symbol": "VEDL",
+    "name": "VEDL Corporation Ltd.",
+    "sector": "Telecom",
+    "currentPrice": 3331,
+    "change": 10.055857455850953,
+    "changePercent": 0.3018870446067533,
+    "volume": 2323421,
+    "marketCap": 323296
+  },
+  {
+    "symbol": "ZOMATO",
+    "name": "ZOMATO Corporation Ltd.",
+    "sector": "Auto",
+    "currentPrice": 1871,
+    "change": -24.277633486985156,
+    "changePercent": -1.2975752799030014,
+    "volume": 14353347,
+    "marketCap": 158565
+  },
+  {
+    "symbol": "ABBOTINDIA",
+    "name": "ABBOTINDIA Corporation Ltd.",
+    "sector": "Energy",
+    "currentPrice": 2642,
+    "change": -5.831762466386797,
+    "changePercent": -0.2207328715513549,
+    "volume": 6413800,
+    "marketCap": 326353
+  },
+  {
+    "symbol": "ABFRL",
+    "name": "ABFRL Corporation Ltd.",
+    "sector": "Metals",
+    "currentPrice": 2087,
+    "change": -19.305122369054935,
+    "changePercent": -0.9250178423121674,
+    "volume": 16693208,
+    "marketCap": 228298
+  },
+  {
+    "symbol": "ADANIGREEN",
+    "name": "ADANIGREEN Corporation Ltd.",
+    "sector": "IT",
+    "currentPrice": 2586,
+    "change": -1.5136136024062385,
+    "changePercent": -0.05853107511238355,
+    "volume": 11093976,
+    "marketCap": 232770
+  },
+  {
+    "symbol": "ADANIPOWER",
+    "name": "ADANIPOWER Corporation Ltd.",
+    "sector": "Telecom",
+    "currentPrice": 3665,
+    "change": -4.770041393549046,
+    "changePercent": -0.1301511976411745,
+    "volume": 19864109,
+    "marketCap": 468063
+  },
+  {
+    "symbol": "ALKEM",
+    "name": "ALKEM Corporation Ltd.",
+    "sector": "Energy",
+    "currentPrice": 743,
+    "change": 9.338147228597931,
+    "changePercent": 1.2568165852756301,
+    "volume": 19717781,
+    "marketCap": 447095
+  },
+  {
+    "symbol": "AMBUJACEM",
+    "name": "AMBUJACEM Corporation Ltd.",
+    "sector": "Pharma",
+    "currentPrice": 4768,
+    "change": -7.286481807030171,
+    "changePercent": -0.15282050769778044,
+    "volume": 3295996,
+    "marketCap": 207702
+  },
+  {
+    "symbol": "AUROPHARMA",
+    "name": "AUROPHARMA Corporation Ltd.",
+    "sector": "Metals",
+    "currentPrice": 2563,
+    "change": -5.460660133896478,
+    "changePercent": -0.21305735988671393,
+    "volume": 2703190,
+    "marketCap": 398062
+  },
+  {
+    "symbol": "BAJAJHLDNG",
+    "name": "BAJAJHLDNG Corporation Ltd.",
+    "sector": "FMCG",
+    "currentPrice": 1748,
+    "change": -12.896533963027391,
+    "changePercent": -0.7377879841548851,
+    "volume": 3939985,
+    "marketCap": 307846
+  },
+  {
+    "symbol": "BANKBARODA",
+    "name": "BANKBARODA Corporation Ltd.",
+    "sector": "Telecom",
+    "currentPrice": 4816,
+    "change": 15.503125786570488,
+    "changePercent": 0.32190875802679586,
+    "volume": 7745513,
+    "marketCap": 546541
+  },
+  {
+    "symbol": "BERGEPAINT",
+    "name": "BERGEPAINT Corporation Ltd.",
+    "sector": "Energy",
+    "currentPrice": 539,
+    "change": -21.62678413820407,
+    "changePercent": -4.012390378145468,
+    "volume": 6748089,
+    "marketCap": 412882
+  },
+  {
+    "symbol": "BIOCON",
+    "name": "BIOCON Corporation Ltd.",
+    "sector": "Telecom",
+    "currentPrice": 3419,
+    "change": 13.048904650425458,
+    "changePercent": 0.3816585156602942,
+    "volume": 3390013,
+    "marketCap": 416478
+  },
+  {
+    "symbol": "BOSCHLTD",
+    "name": "BOSCHLTD Corporation Ltd.",
+    "sector": "IT",
+    "currentPrice": 1404,
+    "change": 19.44207588998163,
+    "changePercent": 1.3847632400271817,
+    "volume": 14824057,
+    "marketCap": 317878
+  },
+  {
+    "symbol": "CANBK",
+    "name": "CANBK Corporation Ltd.",
+    "sector": "Energy",
+    "currentPrice": 3616,
+    "change": -11.823565481478603,
+    "changePercent": -0.3269791338904481,
+    "volume": 16736930,
+    "marketCap": 515238
+  },
+  {
+    "symbol": "CHOLAFIN",
+    "name": "CHOLAFIN Corporation Ltd.",
+    "sector": "Telecom",
+    "currentPrice": 1916,
+    "change": -18.578875451520418,
+    "changePercent": -0.9696699087432368,
+    "volume": 20834340,
+    "marketCap": 472475
+  },
+  {
+    "symbol": "COLPAL",
+    "name": "COLPAL Corporation Ltd.",
+    "sector": "Cement",
+    "currentPrice": 1169,
+    "change": -10.024327673973094,
+    "changePercent": -0.8575130602201106,
+    "volume": 17081086,
+    "marketCap": 86872
+  },
+  {
+    "symbol": "CONCOR",
+    "name": "CONCOR Corporation Ltd.",
+    "sector": "Metals",
+    "currentPrice": 502,
+    "change": 5.870350346781006,
+    "changePercent": 1.169392499358766,
+    "volume": 3669889,
+    "marketCap": 456580
+  },
+  {
+    "symbol": "COROMANDEL",
+    "name": "COROMANDEL Corporation Ltd.",
+    "sector": "Banking",
+    "currentPrice": 198,
+    "change": 14.85384397260704,
+    "changePercent": 7.501941400306586,
+    "volume": 6088275,
+    "marketCap": 231171
+  },
+  {
+    "symbol": "CUMMINSIND",
+    "name": "CUMMINSIND Corporation Ltd.",
+    "sector": "Telecom",
+    "currentPrice": 2003,
+    "change": -8.975123692930554,
+    "changePercent": -0.44808405855868966,
+    "volume": 14094679,
+    "marketCap": 378216
+  },
+  {
+    "symbol": "DABUR",
+    "name": "DABUR Corporation Ltd.",
+    "sector": "FMCG",
+    "currentPrice": 2024,
+    "change": 4.071035471898993,
+    "changePercent": 0.20113811620054312,
+    "volume": 7869448,
+    "marketCap": 426266
+  },
+  {
+    "symbol": "DALBHARAT",
+    "name": "DALBHARAT Corporation Ltd.",
+    "sector": "Banking",
+    "currentPrice": 988,
+    "change": -2.8561628990884937,
+    "changePercent": -0.28908531367292445,
+    "volume": 9812618,
+    "marketCap": 351659
+  },
+  {
+    "symbol": "DLF",
+    "name": "DLF Corporation Ltd.",
+    "sector": "FMCG",
+    "currentPrice": 1906,
+    "change": -16.491357514375288,
+    "changePercent": -0.8652338674908336,
+    "volume": 12865448,
+    "marketCap": 408929
+  },
+  {
+    "symbol": "FEDERALBNK",
+    "name": "FEDERALBNK Corporation Ltd.",
+    "sector": "FMCG",
+    "currentPrice": 1513,
+    "change": -1.6827747485804234,
+    "changePercent": -0.11122106732190506,
+    "volume": 18877797,
+    "marketCap": 160014
+  },
+  {
+    "symbol": "GAIL",
+    "name": "GAIL Corporation Ltd.",
+    "sector": "Real Estate",
+    "currentPrice": 4561,
+    "change": 4.644353376172794,
+    "changePercent": 0.10182752414323161,
+    "volume": 13658271,
+    "marketCap": 279880
+  },
+  {
+    "symbol": "GODREJCP",
+    "name": "GODREJCP Corporation Ltd.",
+    "sector": "Energy",
+    "currentPrice": 1391,
+    "change": 17.854734841644998,
+    "changePercent": 1.2835898520233642,
+    "volume": 4006922,
+    "marketCap": 421998
+  },
+  {
+    "symbol": "GODREJPROP",
+    "name": "GODREJPROP Corporation Ltd.",
+    "sector": "Pharma",
+    "currentPrice": 4882,
+    "change": -6.089668721736458,
+    "changePercent": -0.1247371716865313,
+    "volume": 12886448,
+    "marketCap": 65916
+  },
+  {
+    "symbol": "HAVELLS",
+    "name": "HAVELLS Corporation Ltd.",
+    "sector": "Metals",
+    "currentPrice": 339,
+    "change": -2.0027869102188847,
+    "changePercent": -0.5907925988846268,
+    "volume": 13769858,
+    "marketCap": 442424
+  },
+  {
+    "symbol": "HDFCAMC",
+    "name": "HDFCAMC Corporation Ltd.",
+    "sector": "Energy",
+    "currentPrice": 3507,
+    "change": -17.605148071194904,
+    "changePercent": -0.5020002301452781,
+    "volume": 11058889,
+    "marketCap": 51699
+  },
+  {
+    "symbol": "HDFCLIFE",
+    "name": "HDFCLIFE Corporation Ltd.",
+    "sector": "Cement",
+    "currentPrice": 1674,
+    "change": -24.05845027135669,
+    "changePercent": -1.4371834092805669,
+    "volume": 11473296,
+    "marketCap": 513164
+  },
+  {
+    "symbol": "HONAUT",
+    "name": "HONAUT Corporation Ltd.",
+    "sector": "Auto",
+    "currentPrice": 2579,
+    "change": 8.578044355711894,
+    "changePercent": 0.33261125846110484,
+    "volume": 20657516,
+    "marketCap": 226796
+  },
+  {
+    "symbol": "IDFCFIRSTB",
+    "name": "IDFCFIRSTB Corporation Ltd.",
+    "sector": "Energy",
+    "currentPrice": 2986,
+    "change": 24.320531554303916,
+    "changePercent": 0.8144853166210287,
+    "volume": 9178079,
+    "marketCap": 276100
+  },
+  {
+    "symbol": "INDIAMART",
+    "name": "INDIAMART Corporation Ltd.",
+    "sector": "IT",
+    "currentPrice": 372,
+    "change": -17.794419973700208,
+    "changePercent": -4.783446229489304,
+    "volume": 15922150,
+    "marketCap": 293803
+  },
+  {
+    "symbol": "INDIGO",
+    "name": "INDIGO Corporation Ltd.",
+    "sector": "Metals",
+    "currentPrice": 876,
+    "change": 10.520807536184973,
+    "changePercent": 1.201005426505134,
+    "volume": 5806484,
+    "marketCap": 336244
+  },
+  {
+    "symbol": "IOC",
+    "name": "IOC Corporation Ltd.",
+    "sector": "FMCG",
+    "currentPrice": 225,
+    "change": 23.81442955472885,
+    "changePercent": 10.584190913212822,
+    "volume": 3181427,
+    "marketCap": 447804
+  },
+  {
+    "symbol": "IRCTC",
+    "name": "IRCTC Corporation Ltd.",
+    "sector": "Telecom",
+    "currentPrice": 4121,
+    "change": 5.235430095210031,
+    "changePercent": 0.1270427103909253,
+    "volume": 5923921,
+    "marketCap": 92991
+  },
+  {
+    "symbol": "JINDALSTEL",
+    "name": "JINDALSTEL Corporation Ltd.",
+    "sector": "Metals",
+    "currentPrice": 4084,
+    "change": -8.060579437855358,
+    "changePercent": -0.19736972178881876,
+    "volume": 17415401,
+    "marketCap": 365480
+  },
+  {
+    "symbol": "JUBLFOOD",
+    "name": "JUBLFOOD Corporation Ltd.",
+    "sector": "Real Estate",
+    "currentPrice": 683,
+    "change": -16.97689559583496,
+    "changePercent": -2.485636251220346,
+    "volume": 2144180,
+    "marketCap": 50493
+  },
+  {
+    "symbol": "KOTAKBANK",
+    "name": "KOTAKBANK Corporation Ltd.",
+    "sector": "FMCG",
+    "currentPrice": 4145,
+    "change": 1.993958179542027,
+    "changePercent": 0.04810514305288364,
+    "volume": 7405909,
+    "marketCap": 330230
+  },
+  {
+    "symbol": "LICI",
+    "name": "LICI Corporation Ltd.",
+    "sector": "Energy",
+    "currentPrice": 3572,
+    "change": 22.427102859714005,
+    "changePercent": 0.6278584227243562,
+    "volume": 2613129,
+    "marketCap": 483415
+  },
+  {
+    "symbol": "LUPIN",
+    "name": "LUPIN Corporation Ltd.",
+    "sector": "Cement",
+    "currentPrice": 3122,
+    "change": -4.868218312872758,
+    "changePercent": -0.15593268138605887,
+    "volume": 8802185,
+    "marketCap": 487005
+  },
+  {
+    "symbol": "MARICO",
+    "name": "MARICO Corporation Ltd.",
+    "sector": "Auto",
+    "currentPrice": 2601,
+    "change": -0.20617132486063228,
+    "changePercent": -0.007926617641700587,
+    "volume": 3443911,
+    "marketCap": 60522
+  },
+  {
+    "symbol": "MCDOWELL-N",
+    "name": "MCDOWELL-N Corporation Ltd.",
+    "sector": "Metals",
+    "currentPrice": 1370,
+    "change": 19.303881074573994,
+    "changePercent": 1.4090424142024813,
+    "volume": 10494421,
+    "marketCap": 426905
+  },
+  {
+    "symbol": "MOTHERSON",
+    "name": "MOTHERSON Corporation Ltd.",
+    "sector": "Real Estate",
+    "currentPrice": 4891,
+    "change": -15.513304030661178,
+    "changePercent": -0.31718061808753173,
+    "volume": 14048170,
+    "marketCap": 210428
+  },
+  {
+    "symbol": "MUTHOOTFIN",
+    "name": "MUTHOOTFIN Corporation Ltd.",
+    "sector": "Telecom",
+    "currentPrice": 844,
+    "change": -2.1000406784718653,
+    "changePercent": -0.24881998560093188,
+    "volume": 8435367,
+    "marketCap": 115828
+  },
+  {
+    "symbol": "NAUKRI",
+    "name": "NAUKRI Corporation Ltd.",
+    "sector": "FMCG",
+    "currentPrice": 1798,
+    "change": 12.140556963822895,
+    "changePercent": 0.6752256375874802,
+    "volume": 18963361,
+    "marketCap": 66191
+  },
+  {
+    "symbol": "NMDC",
+    "name": "NMDC Corporation Ltd.",
+    "sector": "Banking",
+    "currentPrice": 1426,
+    "change": -21.244549097110994,
+    "changePercent": -1.489800076936255,
+    "volume": 20250446,
+    "marketCap": 527502
+  },
+  {
+    "symbol": "OBEROIRLTY",
+    "name": "OBEROIRLTY Corporation Ltd.",
+    "sector": "Pharma",
+    "currentPrice": 4556,
+    "change": -10.826978027738187,
+    "changePercent": -0.23764218673701024,
+    "volume": 2873998,
+    "marketCap": 507793
+  },
+  {
+    "symbol": "OFSS",
+    "name": "OFSS Corporation Ltd.",
+    "sector": "FMCG",
+    "currentPrice": 838,
+    "change": 1.9370851706015324,
+    "changePercent": 0.23115574828180577,
+    "volume": 1145663,
+    "marketCap": 524248
+  },
+  {
+    "symbol": "PAYTM",
+    "name": "PAYTM Corporation Ltd.",
+    "sector": "Telecom",
+    "currentPrice": 809,
+    "change": 7.623790060752311,
+    "changePercent": 0.9423720717864413,
+    "volume": 2524282,
+    "marketCap": 248142
+  },
+  {
+    "symbol": "PGHH",
+    "name": "PGHH Corporation Ltd.",
+    "sector": "Auto",
+    "currentPrice": 2126,
+    "change": -19.42186442762183,
+    "changePercent": -0.913540189445994,
+    "volume": 19917657,
+    "marketCap": 469432
+  },
+  {
+    "symbol": "PIDILITIND",
+    "name": "PIDILITIND Corporation Ltd.",
+    "sector": "FMCG",
+    "currentPrice": 756,
+    "change": -20.17697517165797,
+    "changePercent": -2.6689120597431173,
+    "volume": 2028366,
+    "marketCap": 502970
+  }
+]

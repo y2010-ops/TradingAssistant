@@ -1,0 +1,52 @@
+[
+  {
+    "id": "1",
+    "title": "RBI Maintains Repo Rate at 6.5%, Focuses on Inflation Control",
+    "summary": "Reserve Bank of India keeps key policy rates unchanged, maintains accommodative stance.",
+    "sentiment": "positive",
+    "source": "Economic Times",
+    "publishedAt": "2025-07-04T21:01:38.913Z",
+    "url": "https://economictimes.indiatimes.com/news/economy/policy/rbi-maintains-repo-rate-at-6-5-focuses-on-inflation-control/articleshow/123456789.cms",
+    "impact": "high"
+  },
+  {
+    "id": "2",
+    "title": "Reliance Industries Reports Strong Q3 Results",
+    "summary": "Oil-to-telecom conglomerate beats estimates with 25% growth in net profit.",
+    "sentiment": "positive",
+    "source": "Business Standard",
+    "publishedAt": "2025-07-04T21:01:38.913Z",
+    "url": "https://www.business-standard.com/article/companies/reliance-industries-reports-strong-q3-results-123456789.html",
+    "impact": "high"
+  },
+  {
+    "id": "3",
+    "title": "Indian Markets Hit All-Time High on Strong FII Inflows",
+    "summary": "Benchmark indices reach record levels as foreign investors show confidence in Indian economy.",
+    "sentiment": "positive",
+    "source": "Economic Times",
+    "publishedAt": "2025-07-04T21:01:38.913Z",
+    "url": "https://economictimes.indiatimes.com/markets/stocks/news/indian-markets-hit-all-time-high-on-strong-fii-inflows/articleshow/123456789.cms",
+    "impact": "high"
+  },
+  {
+    "id": "4",
+    "title": "IT Sector Faces Headwinds Amid Global Slowdown",
+    "summary": "Major IT companies revise guidance downward as client spending remains cautious.",
+    "sentiment": "negative",
+    "source": "Mint",
+    "publishedAt": "2025-07-04T21:01:38.913Z",
+    "url": "https://www.livemint.com/market/stock-market-news/it-sector-faces-headwinds-amid-global-slowdown-123456789.html",
+    "impact": "medium"
+  },
+  {
+    "id": "5",
+    "title": "Banking Sector Shows Resilience with Improved Asset Quality",
+    "summary": "PSU banks report significant reduction in NPAs, credit growth remains robust.",
+    "sentiment": "positive",
+    "source": "Financial Express",
+    "publishedAt": "2025-07-04T21:01:38.913Z",
+    "url": "https://www.financialexpress.com/industry/banking-finance/banking-sector-shows-resilience-with-improved-asset-quality/123456789/",
+    "impact": "medium"
+  }
+]
