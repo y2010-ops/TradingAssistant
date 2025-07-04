@@ -425,10 +425,6 @@ app.get('/api/stocks/search/:query', async (req, res) => {
         stock.name.toLowerCase().includes(query.toLowerCase())
       ).slice(0, parseInt(limit));
     }
-      },
-      limit: parseInt(limit),
-      order: [['symbol', 'ASC']]
-    });
     
     res.json(stocks);
   } catch (error) {
@@ -519,12 +515,6 @@ app.get('/api/sentiment/:symbol', async (req, res) => {
     } catch (dbError) {
       console.warn('Could not save sentiment data to database:', dbError.message);
     }
-      symbol: symbol,
-      source: 'aggregated',
-      sentimentScore: sentimentData.overall,
-      content: JSON.stringify(sentimentData),
-      mentions: sentimentData.mentions
-    });
     
     res.json(sentimentData);
   } catch (error) {
