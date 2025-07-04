@@ -606,7 +606,9 @@ process.on('SIGTERM', () => {
   console.log('SIGTERM received, shutting down gracefully');
   server.close(() => {
     console.log('Server closed');
-    sequelize.close();
+    if (sequelize) {
+      sequelize.close();
+    }
     process.exit(0);
   });
 });
