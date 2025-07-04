@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "concurrently \"npm run server\" \"vite\" --kill-others-on-fail",
+    "mock-server": "node server/mock-server.js",
+    "dev:mock": "concurrently \"npm run mock-server\" \"vite\" --kill-others-on-fail",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",

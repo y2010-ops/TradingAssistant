@@ -21,7 +21,10 @@ const NewsWidget: React.FC = () => {
   const fetchNews = useCallback(async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/market/news?limit=5');
+      const response = await fetch('/api/market/news?limit=5', {
+        // Add error handling for timeouts
+        signal: AbortSignal.timeout(10000) // 10 second timeout
+      });
       
       if (!response.ok) {
         throw new Error('Failed to fetch news');
@@ -41,10 +44,19 @@ const NewsWidget: React.FC = () => {
   useEffect(() => {
     fetchNews();
     
-    // Refresh news every 5 minutes
-    const interval = setInterval(fetchNews, 5 * 60 * 1000);
+    // Set up interval for updates with a more reliable approach
+    let intervalId: number | undefined;
     
-    return () => clearInterval(interval);
+    const setupInterval = () => {
+      intervalId = window.setInterval(fetchNews, 5 * 60 * 1000);
+    };
+    
+    // Start the interval
+    setupInterval();
+    
+    return () => {
+      if (intervalId) window.clearInterval(intervalId);
+    };
   }, [fetchNews]);
 
   const getSentimentColor = (sentiment: string) => {

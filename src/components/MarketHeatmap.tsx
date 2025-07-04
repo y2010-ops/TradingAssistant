@@ -19,7 +19,10 @@ const MarketHeatmap: React.FC = () => {
   const fetchStockData = useCallback(async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/stocks');
+      const response = await fetch('/api/stocks', {
+        // Add error handling for timeouts
+        signal: AbortSignal.timeout(10000) // 10 second timeout
+      });
       
       if (!response.ok) {
         throw new Error('Failed to fetch stocks');
@@ -46,21 +49,19 @@ const MarketHeatmap: React.FC = () => {
       
       // Fallback to mock data if API fails
       if (heatmapData.length === 0) {
-        setHeatmapData([
-          { symbol: 'RELIANCE', name: 'Reliance Industries', price: 2456.75, change: 45.30, changePercent: 1.88, volume: 12500000, marketCap: 1650000 },
-          { symbol: 'TCS', name: 'Tata Consultancy Services', price: 3234.50, change: -23.45, changePercent: -0.72, volume: 8500000, marketCap: 1200000 },
-          { symbol: 'HDFCBANK', name: 'HDFC Bank', price: 1567.25, change: 34.20, changePercent: 2.23, volume: 15000000, marketCap: 850000 },
-          { symbol: 'INFY', name: 'Infosys', price: 1432.80, change: -12.65, changePercent: -0.87, volume: 9500000, marketCap: 720000 },
-          { symbol: 'ITC', name: 'ITC Limited', price: 456.90, change: 8.45, changePercent: 1.89, volume: 18000000, marketCap: 580000 },
-          { symbol: 'WIPRO', name: 'Wipro Limited', price: 389.50, change: 5.75, changePercent: 1.50, volume: 6500000, marketCap: 210000 },
-          { symbol: 'KOTAKBANK', name: 'Kotak Mahindra Bank', price: 1756.80, change: -15.30, changePercent: -0.86, volume: 4500000, marketCap: 350000 },
-          { symbol: 'BHARTIARTL', name: 'Bharti Airtel', price: 876.45, change: 12.60, changePercent: 1.46, volume: 8900000, marketCap: 485000 },
-          { symbol: 'SBIN', name: 'State Bank of India', price: 598.75, change: 8.90, changePercent: 1.51, volume: 22000000, marketCap: 520000 },
-          { symbol: 'ASIANPAINT', name: 'Asian Paints', price: 3245.60, change: -45.80, changePercent: -1.39, volume: 3200000, marketCap: 310000 },
-          { symbol: 'HCLTECH', name: 'HCL Technologies', price: 1234.50, change: 18.75, changePercent: 1.54, volume: 5600000, marketCap: 335000 },
-          { symbol: 'BAJFINANCE', name: 'Bajaj Finance', price: 6845.30, change: -89.50, changePercent: -1.29, volume: 2800000, marketCap: 425000 }
-        ]);
-      }
+      // Always provide fallback data if API fails
+      setHeatmapData([
+        { symbol: 'RELIANCE', name: 'Reliance Industries', price: 2456.75, change: 45.30, changePercent: 1.88, volume: 12500000, marketCap: 1650000 },
+        { symbol: 'TCS', name: 'Tata Consultancy Services', price: 3234.50, change: -23.45, changePercent: -0.72, volume: 8500000, marketCap: 1200000 },
+        { symbol: 'HDFCBANK', name: 'HDFC Bank', price: 1567.25, change: 34.20, changePercent: 2.23, volume: 15000000, marketCap: 850000 },
+        { symbol: 'INFY', name: 'Infosys', price: 1432.80, change: -12.65, changePercent: -0.87, volume: 9500000, marketCap: 720000 },
+        { symbol: 'ITC', name: 'ITC Limited', price: 456.90, change: 8.45, changePercent: 1.89, volume: 18000000, marketCap: 580000 },
+        { symbol: 'WIPRO', name: 'Wipro Limited', price: 389.50, change: 5.75, changePercent: 1.50, volume: 6500000, marketCap: 210000 },
+        { symbol: 'KOTAKBANK', name: 'Kotak Mahindra Bank', price: 1756.80, change: -15.30, changePercent: -0.86, volume: 4500000, marketCap: 350000 },
+        { symbol: 'BHARTIARTL', name: 'Bharti Airtel', price: 876.45, change: 12.60, changePercent: 1.46, volume: 8900000, marketCap: 485000 },
+        { symbol: 'SBIN', name: 'State Bank of India', price: 598.75, change: 8.90, changePercent: 1.51, volume: 22000000, marketCap: 520000 },
+        { symbol: 'ASIANPAINT', name: 'Asian Paints', price: 3245.60, change: -45.80, changePercent: -1.39, volume: 3200000, marketCap: 310000 }
+      ]);
     } finally {
       setLoading(false);
     }
@@ -86,10 +87,19 @@ const MarketHeatmap: React.FC = () => {
     // Initial fetch
     fetchStockData();
     
-    // Set up interval for updates
-    const interval = setInterval(fetchStockData, 60000); // Update every minute
+    // Set up interval for updates with a more reliable approach
+    let intervalId: number | undefined;
+    
+    const setupInterval = () => {
+      intervalId = window.setInterval(fetchStockData, 60000); // Update every minute
+    };
+    
+    // Start the interval
+    setupInterval();
 
-    return () => clearInterval(interval);
+    return () => {
+      if (intervalId) window.clearInterval(intervalId);
+    };
   }, [fetchStockData]);
 
   return (

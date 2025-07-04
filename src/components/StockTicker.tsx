@@ -17,7 +17,10 @@ const StockTicker: React.FC = () => {
   const fetchStocks = useCallback(async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/stocks');
+      const response = await fetch('/api/stocks', {
+        // Add error handling for timeouts
+        signal: AbortSignal.timeout(10000) // 10 second timeout
+      });
       
       if (!response.ok) {
         throw new Error('Failed to fetch stocks');
@@ -39,21 +42,19 @@ const StockTicker: React.FC = () => {
       console.error('Error fetching stocks:', err);
       setError('Failed to load stock data');
       
-      // Fallback to mock data if API fails
-      if (stocks.length === 0) {
-        setStocks([
-          { symbol: 'RELIANCE', price: 2456.75, change: 45.30, changePercent: 1.88 },
-          { symbol: 'TCS', price: 3234.50, change: -23.45, changePercent: -0.72 },
-          { symbol: 'HDFCBANK', price: 1567.25, change: 34.20, changePercent: 2.23 },
-          { symbol: 'INFY', price: 1432.80, change: -12.65, changePercent: -0.87 },
-          { symbol: 'ITC', price: 456.90, change: 8.45, changePercent: 1.89 },
-          { symbol: 'WIPRO', price: 389.50, change: 5.75, changePercent: 1.50 },
-          { symbol: 'KOTAKBANK', price: 1756.80, change: -15.30, changePercent: -0.86 },
-          { symbol: 'BHARTIARTL', price: 876.45, change: 12.60, changePercent: 1.46 },
-          { symbol: 'SBIN', price: 598.75, change: 8.90, changePercent: 1.51 },
-          { symbol: 'ASIANPAINT', price: 3245.60, change: -45.80, changePercent: -1.39 }
-        ]);
-      }
+      // Always provide fallback data if API fails
+      setStocks([
+        { symbol: 'RELIANCE', price: 2456.75, change: 45.30, changePercent: 1.88 },
+        { symbol: 'TCS', price: 3234.50, change: -23.45, changePercent: -0.72 },
+        { symbol: 'HDFCBANK', price: 1567.25, change: 34.20, changePercent: 2.23 },
+        { symbol: 'INFY', price: 1432.80, change: -12.65, changePercent: -0.87 },
+        { symbol: 'ITC', price: 456.90, change: 8.45, changePercent: 1.89 },
+        { symbol: 'WIPRO', price: 389.50, change: 5.75, changePercent: 1.50 },
+        { symbol: 'KOTAKBANK', price: 1756.80, change: -15.30, changePercent: -0.86 },
+        { symbol: 'BHARTIARTL', price: 876.45, change: 12.60, changePercent: 1.46 },
+        { symbol: 'SBIN', price: 598.75, change: 8.90, changePercent: 1.51 },
+        { symbol: 'ASIANPAINT', price: 3245.60, change: -45.80, changePercent: -1.39 }
+      ]);
     } finally {
       setLoading(false);
     }
@@ -63,10 +64,19 @@ const StockTicker: React.FC = () => {
     // Initial fetch
     fetchStocks();
     
-    // Set up interval for updates
-    const interval = setInterval(fetchStocks, 30000); // Update every 30 seconds
+    // Set up interval for updates with a more reliable approach
+    let intervalId: number | undefined;
+    
+    const setupInterval = () => {
+      intervalId = window.setInterval(fetchStocks, 30000); // Update every 30 seconds
+    };
+    
+    // Start the interval
+    setupInterval();
 
-    return () => clearInterval(interval);
+    return () => {
+      if (intervalId) window.clearInterval(intervalId);
+    };
   }, [fetchStocks]);
 
   return (
