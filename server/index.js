@@ -209,15 +209,47 @@ app.get('/api/health', (req, res) => {
 });
 
 // Authentication routes (public)
-app.use('/api/auth', authRoutes);
+if (authRoutes) {
+  app.use('/api/auth', authRoutes);
+} else {
+  app.use('/api/auth', (req, res) => {
+    res.status(503).json({ error: 'Authentication service temporarily unavailable' });
+  });
+}
 
 // Market data routes (public)
-app.use('/api/market', marketRoutes);
+if (marketRoutes) {
+  app.use('/api/market', marketRoutes);
+} else {
+  app.use('/api/market', (req, res) => {
+    res.status(503).json({ error: 'Market data service temporarily unavailable' });
+  });
+}
 
 // Protected routes (require authentication)
-app.use('/api/portfolio', authenticateToken, portfolioRoutes);
-app.use('/api/watchlists', authenticateToken, watchlistRoutes);
-app.use('/api/alerts', authenticateToken, alertRoutes);
+if (portfolioRoutes) {
+  app.use('/api/portfolio', authenticateToken, portfolioRoutes);
+} else {
+  app.use('/api/portfolio', authenticateToken, (req, res) => {
+    res.status(503).json({ error: 'Portfolio service temporarily unavailable' });
+  });
+}
+
+if (watchlistRoutes) {
+  app.use('/api/watchlists', authenticateToken, watchlistRoutes);
+} else {
+  app.use('/api/watchlists', authenticateToken, (req, res) => {
+    res.status(503).json({ error: 'Watchlist service temporarily unavailable' });
+  });
+}
+
+if (alertRoutes) {
+  app.use('/api/alerts', authenticateToken, alertRoutes);
+} else {
+  app.use('/api/alerts', authenticateToken, (req, res) => {
+    res.status(503).json({ error: 'Alert service temporarily unavailable' });
+  });
+}
 
 // Get all stocks
 app.get('/api/stocks', async (req, res) => {
