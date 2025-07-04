@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "server": "node --experimental-modules server/index.js",
+    "server": "node server/index.js",
     "ai-server": "node server/ai-engine.js",
     "test-ai-models": "node scripts/test-ai-models.js",
     "test-apis": "node scripts/test-apis.js",
