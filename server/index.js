@@ -20,7 +20,7 @@ dotenv.config({ path: join(__dirname, '../.env') });
 // Import services
 // Conditional imports with error handling
 let AITradingEngine, DataProvider, SentimentAnalysis;
-let sequelize, Stock, SentimentData, TradingSignal, Op;
+let sequelize, Stock, SentimentData, TradingSignal, Op = {};
 let authRoutes, portfolioRoutes, watchlistRoutes, alertRoutes, marketRoutes;
 
 try {
@@ -77,9 +77,42 @@ const io = new Server(server, {
 });
 
 // Initialize services
-const aiEngine = new AITradingEngine();
-const dataProvider = new DataProvider();
-const sentimentAnalysis = new SentimentAnalysis();
+// Create mock implementations for fallback
+const createMockAIEngine = () => ({
+  generateChatResponse: async (message, context) => ({
+    message: "I'm currently unavailable. Please try again later.",
+    confidence: 0.1,
+    timestamp: new Date().toISOString()
+  }),
+  generateTradingSignal: async (symbol, historical, fundamental) => ({
+    symbol,
+    action: 'HOLD',
+    confidence: 50,
+    reasoning: 'AI engine temporarily unavailable'
+  })
+});
+
+const createMockDataProvider = () => ({
+  getRealTimeData: async (symbol) => ({
+    symbol,
+    price: Math.random() * 1000 + 100,
+    change: (Math.random() - 0.5) * 20,
+    changePercent: (Math.random() - 0.5) * 5,
+    volume: Math.floor(Math.random() * 1000000)
+  }),
+  getHistoricalData: async (symbol, period) => [],
+  getNewsData: async (symbol) => []
+});
+
+const createMockSentimentAnalysis = () => ({
+  analyzeStockSentiment: async (symbol) => ({ overall: 0, mentions: 0 }),
+  analyzeSocialSentiment: async (symbol, sources) => ({ overall: 0, sources: {} })
+});
+
+// Initialize services with fallbacks
+const aiEngine = AITradingEngine ? new AITradingEngine() : createMockAIEngine();
+const dataProvider = DataProvider ? new DataProvider() : createMockDataProvider();
+const sentimentAnalysis = SentimentAnalysis ? new SentimentAnalysis() : createMockSentimentAnalysis();
 
 // Security middleware
 app.use(helmet());
@@ -364,12 +397,34 @@ app.get('/api/stocks/search/:query', async (req, res) => {
     const { query } = req.params;
     const { limit = 10 } = req.query;
     
-    const stocks = await Stock.findAll({
-      where: {
-        [Op.or]: [
-          { symbol: { [Op.iLike]: `%${query}%` } },
-          { name: { [Op.iLike]: `%${query}%` } }
-        ]
+    let stocks = [];
+    
+    if (Stock && Op && Op.or && Op.iLike) {
+      stocks = await Stock.findAll({
+        where: {
+          [Op.or]: [
+            { symbol: { [Op.iLike]: `%${query}%` } },
+            { name: { [Op.iLike]: `%${query}%` } }
+          ]
+        },
+        limit: parseInt(limit),
+        order: [['symbol', 'ASC']]
+      });
+    } else {
+      // Fallback to mock data search
+      const mockStocks = [
+        { symbol: 'RELIANCE', name: 'Reliance Industries Limited', sector: 'Energy' },
+        { symbol: 'TCS', name: 'Tata Consultancy Services', sector: 'IT' },
+        { symbol: 'HDFCBANK', name: 'HDFC Bank Limited', sector: 'Banking' },
+        { symbol: 'INFY', name: 'Infosys Limited', sector: 'IT' },
+        { symbol: 'ITC', name: 'ITC Limited', sector: 'FMCG' }
+      ];
+      
+      stocks = mockStocks.filter(stock => 
+        stock.symbol.toLowerCase().includes(query.toLowerCase()) ||
+        stock.name.toLowerCase().includes(query.toLowerCase())
+      ).slice(0, parseInt(limit));
+    }
       },
       limit: parseInt(limit),
       order: [['symbol', 'ASC']]
@@ -416,7 +471,13 @@ app.get('/api/signals', async (req, res) => {
       const signal = await aiEngine.generateTradingSignal(symbol, historicalData, fundamentalData);
       
       // Save to database
-      await TradingSignal.create(signal);
+      try {
+        if (TradingSignal) {
+          await TradingSignal.create(signal);
+        }
+      } catch (dbError) {
+        console.warn('Could not save signal to database:', dbError.message);
+      }
       
       res.json(signal);
     } else {
@@ -445,7 +506,19 @@ app.get('/api/sentiment/:symbol', async (req, res) => {
     const sentimentData = await sentimentAnalysis.analyzeStockSentiment(symbol);
     
     // Save to database
-    await SentimentData.create({
+    try {
+      if (SentimentData) {
+        await SentimentData.create({
+          symbol: symbol,
+          source: 'aggregated',
+          sentimentScore: sentimentData.overall,
+          content: JSON.stringify(sentimentData),
+          mentions: sentimentData.mentions
+        });
+      }
+    } catch (dbError) {
+      console.warn('Could not save sentiment data to database:', dbError.message);
+    }
       symbol: symbol,
       source: 'aggregated',
       sentimentScore: sentimentData.overall,
@@ -587,7 +660,13 @@ cron.schedule('0 */2 * * *', async () => {
       const signal = await aiEngine.generateTradingSignal(symbol, historicalData, fundamentalData);
       
       // Save to database
-      await TradingSignal.create(signal);
+      try {
+        if (TradingSignal) {
+          await TradingSignal.create(signal);
+        }
+      } catch (dbError) {
+        console.warn('Could not save scheduled signal to database:', dbError.message);
+      }
       
       // Emit to WebSocket clients
       io.emit('newSignal', signal);
