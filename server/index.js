@@ -8,6 +8,7 @@ import dotenv from 'dotenv';
 import cron from 'node-cron';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import jwt from 'jsonwebtoken';
 
 // Get current directory for ES modules
 const __filename = fileURLToPath(import.meta.url);
