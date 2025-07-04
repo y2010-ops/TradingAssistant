@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Ensure dark mode applies to the entire page */
+html.dark {
+  color-scheme: dark;
+}
+
+html.dark body {
+  @apply bg-gray-900 text-white;
+}
+
+html.light body {
+  @apply bg-gray-50 text-gray-900;
+}
