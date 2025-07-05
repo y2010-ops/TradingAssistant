@@ -10,6 +10,13 @@ import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import jwt from 'jsonwebtoken';
 
+// Import route modules
+import authRoutes from './routes/auth.js';
+import marketRoutes from './routes/market.js';
+import portfolioRoutes from './routes/portfolio.js';
+import watchlistRoutes from './routes/watchlist.js';
+import alertRoutes from './routes/alerts.js';
+
 // Get current directory for ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -139,8 +146,6 @@ io.on('connection', (socket) => {
   });
 });
 
-// API Routes
-
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ 
@@ -154,92 +159,12 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Market overview endpoint
-app.get('/api/market/overview', async (req, res) => {
-  try {
-    const marketStatus = getMarketStatus();
-    const topGainers = await getTopMovers('gainers');
-    const topLosers = await getTopMovers('losers');
-    const sectorPerformance = await getSectorPerformance();
-    
-    res.json({
-      marketStatus,
-      indices: {
-        nifty50: {
-          value: 19500 + Math.random() * 1000,
-          change: (Math.random() - 0.5) * 200,
-          changePercent: (Math.random() - 0.5) * 2
-        },
-        sensex: {
-          value: 65000 + Math.random() * 2000,
-          change: (Math.random() - 0.5) * 500,
-          changePercent: (Math.random() - 0.5) * 2
-        }
-      },
-      topGainers,
-      topLosers,
-      sectorPerformance,
-      volume: Math.floor(Math.random() * 1000000000),
-      advances: Math.floor(Math.random() * 2000),
-      declines: Math.floor(Math.random() * 1500)
-    });
-  } catch (error) {
-    console.error('Error fetching market overview:', error);
-    res.status(500).json({ error: 'Failed to fetch market overview' });
-  }
-});
-
-// Authentication routes (mock)
-app.post('/api/auth/signup', async (req, res) => {
-  try {
-    const { email, password, firstName, lastName } = req.body;
-    
-    if (!email || !password) {
-      return res.status(400).json({ error: 'Email and password are required' });
-    }
-    
-    // Mock user creation
-    const user = {
-      id: Math.random().toString(36).substr(2, 9),
-      email,
-      firstName,
-      lastName,
-      createdAt: new Date().toISOString()
-    };
-    
-    const token = jwt.sign({ userId: user.id, email }, process.env.JWT_SECRET || 'fallback_secret');
-    
-    res.json({ user, token });
-  } catch (error) {
-    console.error('Signup error:', error);
-    res.status(500).json({ error: 'Failed to create account' });
-  }
-});
-
-app.post('/api/auth/signin', async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    
-    if (!email || !password) {
-      return res.status(400).json({ error: 'Email and password are required' });
-    }
-    
-    // Mock user authentication
-    const user = {
-      id: Math.random().toString(36).substr(2, 9),
-      email,
-      firstName: 'Demo',
-      lastName: 'User'
-    };
-    
-    const token = jwt.sign({ userId: user.id, email }, process.env.JWT_SECRET || 'fallback_secret');
-    
-    res.json({ user, token });
-  } catch (error) {
-    console.error('Signin error:', error);
-    res.status(500).json({ error: 'Failed to sign in' });
-  }
-});
+// Mount route modules
+app.use('/api/auth', authRoutes);
+app.use('/api/market', marketRoutes);
+app.use('/api/portfolio', authenticateToken, portfolioRoutes);
+app.use('/api/watchlists', authenticateToken, watchlistRoutes);
+app.use('/api/alerts', authenticateToken, alertRoutes);
 
 // Get all stocks
 app.get('/api/stocks', async (req, res) => {
@@ -419,87 +344,6 @@ app.get('/api/news', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch news' });
   }
 });
-
-// Portfolio routes (mock)
-app.get('/api/portfolio', authenticateToken, (req, res) => {
-  res.json({
-    totalValue: 150000,
-    totalInvested: 120000,
-    totalGain: 30000,
-    totalGainPercent: 25,
-    holdings: [
-      {
-        symbol: 'RELIANCE',
-        quantity: 50,
-        avgPrice: 2400,
-        currentPrice: 2500,
-        totalValue: 125000,
-        gain: 5000,
-        gainPercent: 4.17
-      }
-    ]
-  });
-});
-
-// Watchlist routes (mock)
-app.get('/api/watchlists', authenticateToken, (req, res) => {
-  res.json([
-    {
-      id: '1',
-      name: 'My Watchlist',
-      stocks: ['RELIANCE', 'TCS', 'HDFCBANK']
-    }
-  ]);
-});
-
-// Helper functions
-function getMarketStatus() {
-  const now = new Date();
-  const hours = now.getHours();
-  const minutes = now.getMinutes();
-  const currentTime = hours * 60 + minutes;
-  
-  const marketOpen = 9 * 60 + 15; // 9:15 AM
-  const marketClose = 15 * 60 + 30; // 3:30 PM
-  const preMarketStart = 9 * 60; // 9:00 AM
-
-  if (currentTime >= preMarketStart && currentTime < marketOpen) {
-    return { status: 'Pre-Market', class: 'pre-market' };
-  } else if (currentTime >= marketOpen && currentTime < marketClose) {
-    return { status: 'Market Open', class: 'open' };
-  } else {
-    return { status: 'Market Closed', class: 'closed' };
-  }
-}
-
-async function getTopMovers(type) {
-  const stocks = ['RELIANCE', 'TCS', 'HDFCBANK', 'INFY', 'ITC'];
-  const movers = await Promise.all(
-    stocks.map(async (symbol) => {
-      const data = await dataProvider.getRealTimeData(symbol);
-      return {
-        symbol: data.symbol,
-        price: data.price,
-        change: data.change,
-        changePercent: data.changePercent
-      };
-    })
-  );
-  
-  return movers
-    .sort((a, b) => type === 'gainers' ? b.changePercent - a.changePercent : a.changePercent - b.changePercent)
-    .slice(0, 5);
-}
-
-async function getSectorPerformance() {
-  return [
-    { sector: 'Banking', change: 1.8, stocks: 15 },
-    { sector: 'IT', change: -0.5, stocks: 12 },
-    { sector: 'Energy', change: 2.1, stocks: 8 },
-    { sector: 'FMCG', change: 0.8, stocks: 10 },
-    { sector: 'Auto', change: 1.2, stocks: 14 }
-  ];
-}
 
 // Error handling middleware
 app.use((error, req, res, next) => {
