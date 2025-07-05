@@ -42,12 +42,20 @@ function App() {
   const { connected, connectionStatus } = useWebSocket();
 
   useEffect(() => {
+    console.log('App component mounted');
+    console.log('Theme:', theme);
+    console.log('Connection status:', connectionStatus);
+    
     // Apply theme class to document root
     document.documentElement.className = theme;
     document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
+  }, [theme, connectionStatus]);
 
   const ActivePageComponent = pages[activePage as keyof typeof pages];
+
+  console.log('Rendering App component');
+  console.log('Active page:', activePage);
+  console.log('Sidebar open:', sidebarOpen);
 
   return (
     <AuthProvider>

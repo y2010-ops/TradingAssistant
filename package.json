@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "concurrently \"npm run server\" \"vite\" --kill-others-on-fail",
+    "dev:simple": "vite",
     "mock-server": "node server/mock-server.js",
     "dev:mock": "concurrently \"npm run mock-server\" \"vite\" --kill-others-on-fail",
     "build": "vite build",
@@ -15,6 +16,7 @@
     "test-ai-models": "node scripts/test-ai-models.js",
     "test-apis": "node scripts/test-apis.js",
     "setup-ollama": "./scripts/setup-ollama.sh",
+    "setup": "node scripts/dev-setup.js",
     "monitor-performance": "node scripts/performance-monitor.js"
   },
   "dependencies": {
@@ -42,7 +44,7 @@
     "bcryptjs": "^2.4.3",
     "cheerio": "^1.0.0-rc.12",
     "compromise": "^14.10.0",
-    "concurrently": "^8.2.0",
+    "concurrently": "^8.2.2",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "eslint": "^9.9.1",

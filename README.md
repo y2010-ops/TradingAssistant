@@ -74,15 +74,15 @@ git clone <repository-url>
 cd ai-trading-assistant
 ```
 
-2. **Install dependencies**
+2. **Run setup script**
 ```bash
-npm install
+npm run setup
 ```
 
 3. **Environment Configuration**
 ```bash
-cp .env.example .env
-# Edit .env with your configuration
+# Edit .env with your Supabase credentials
+# Get them from https://supabase.com
 ```
 
 4. **Database Setup**
@@ -101,8 +101,12 @@ ollama pull llama3.2:3b
 
 6. **Start the application**
 ```bash
-npm run dev
+npm run dev:simple
 ```
+
+### Vercel Deployment
+
+For production deployment, follow the [Vercel Deployment Guide](./VERCEL_DEPLOYMENT.md).
 
 ## AI Models Configuration
 
