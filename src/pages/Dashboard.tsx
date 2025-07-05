@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { TrendingUp, TrendingDown, Activity, DollarSign, BarChart3, ArrowUp, ArrowDown } from 'lucide-react';
 import StockTicker from '../components/StockTicker';
-import MarketHeatmap from '../components/MarketHeatmap';
 import TradingSignals from '../components/TradingSignals';
 import QuickStats from '../components/QuickStats';
 import NewsWidget from '../components/NewsWidget';
@@ -301,27 +300,17 @@ const Dashboard: React.FC = () => {
 
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Market Heatmap */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.2 }}
-          className="lg:col-span-2"
-        >
-          <MarketHeatmap />
-        </motion.div>
-
-        {/* Top Movers */}
+        {/* Top Movers - Now takes full width on large screens */}
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.3 }}
-          className="trading-card p-6"
+          className="lg:col-span-3 trading-card p-6"
         >
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
             Top Movers
           </h3>
-          <div className="space-y-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
             {topMovers.map((stock) => (
               <div key={stock.symbol} className="flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-700/50">
                 <div>
