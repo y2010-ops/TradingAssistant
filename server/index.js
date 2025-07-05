@@ -17,56 +17,6 @@ const __dirname = dirname(__filename);
 // Load environment variables
 dotenv.config({ path: join(__dirname, '../.env') });
 
-// Import services
-// Conditional imports with error handling
-let AITradingEngine, DataProvider, SentimentAnalysis;
-let sequelize, Stock, SentimentData, TradingSignal, Op = {};
-let authRoutes, portfolioRoutes, watchlistRoutes, alertRoutes, marketRoutes;
-
-try {
-  const aiEngineModule = await import('./services/aiEngine.js').catch(() => null);
-  const dataProviderModule = await import('./services/dataProvider.js').catch(() => null);
-  const sentimentModule = await import('./services/sentimentAnalysis.js').catch(() => null);
-  
-  AITradingEngine = aiEngineModule?.AITradingEngine;
-  DataProvider = dataProviderModule?.DataProvider;
-  SentimentAnalysis = sentimentModule?.SentimentAnalysis;
-} catch (error) {
-  console.warn('⚠️  Some services unavailable, using fallback implementations');
-}
-
-try {
-  const dbModule = await import('./config/database.js').catch(() => null);
-  const stockModule = await import('./models/Stock.js').catch(() => null);
-  const sentimentDataModule = await import('./models/SentimentData.js').catch(() => null);
-  const tradingSignalModule = await import('./models/TradingSignal.js').catch(() => null);
-  const sequelizeModule = await import('sequelize').catch(() => null);
-  
-  sequelize = dbModule?.default;
-  Stock = stockModule?.default;
-  SentimentData = sentimentDataModule?.default;
-  TradingSignal = tradingSignalModule?.default;
-  Op = sequelizeModule?.Op;
-} catch (error) {
-  console.warn('⚠️  Database models unavailable, using mock data');
-}
-
-try {
-  const authModule = await import('./routes/auth.js').catch(() => null);
-  const portfolioModule = await import('./routes/portfolio.js').catch(() => null);
-  const watchlistModule = await import('./routes/watchlist.js').catch(() => null);
-  const alertModule = await import('./routes/alerts.js').catch(() => null);
-  const marketModule = await import('./routes/market.js').catch(() => null);
-  
-  authRoutes = authModule?.default;
-  portfolioRoutes = portfolioModule?.default;
-  watchlistRoutes = watchlistModule?.default;
-  alertRoutes = alertModule?.default;
-  marketRoutes = marketModule?.default;
-} catch (error) {
-  console.warn('⚠️  Some routes unavailable, using basic implementations');
-}
-
 const app = express();
 const server = createServer(app);
 const io = new Server(server, {
@@ -76,8 +26,7 @@ const io = new Server(server, {
   }
 });
 
-// Initialize services
-// Create mock implementations for fallback
+// Create mock implementations for services
 const createMockAIEngine = () => ({
   generateChatResponse: async (message, context) => ({
     message: "I'm currently unavailable. Please try again later.",
@@ -100,8 +49,33 @@ const createMockDataProvider = () => ({
     changePercent: (Math.random() - 0.5) * 5,
     volume: Math.floor(Math.random() * 1000000)
   }),
-  getHistoricalData: async (symbol, period) => [],
-  getNewsData: async (symbol) => []
+  getHistoricalData: async (symbol, period) => {
+    // Generate mock historical data
+    const data = [];
+    const basePrice = Math.random() * 1000 + 100;
+    for (let i = 30; i >= 0; i--) {
+      const date = new Date();
+      date.setDate(date.getDate() - i);
+      data.push({
+        date: date.toISOString().split('T')[0],
+        open: basePrice + (Math.random() - 0.5) * 20,
+        high: basePrice + Math.random() * 30,
+        low: basePrice - Math.random() * 30,
+        close: basePrice + (Math.random() - 0.5) * 20,
+        volume: Math.floor(Math.random() * 1000000)
+      });
+    }
+    return data;
+  },
+  getNewsData: async (symbol) => [
+    {
+      title: `${symbol} Shows Strong Performance`,
+      summary: 'Market analysis indicates positive trends',
+      url: '#',
+      publishedAt: new Date().toISOString(),
+      source: 'Market News'
+    }
+  ]
 });
 
 const createMockSentimentAnalysis = () => ({
@@ -110,9 +84,9 @@ const createMockSentimentAnalysis = () => ({
 });
 
 // Initialize services with fallbacks
-const aiEngine = AITradingEngine ? new AITradingEngine() : createMockAIEngine();
-const dataProvider = DataProvider ? new DataProvider() : createMockDataProvider();
-const sentimentAnalysis = SentimentAnalysis ? new SentimentAnalysis() : createMockSentimentAnalysis();
+const aiEngine = createMockAIEngine();
+const dataProvider = createMockDataProvider();
+const sentimentAnalysis = createMockSentimentAnalysis();
 
 // Security middleware
 app.use(helmet());
@@ -141,68 +115,6 @@ const authenticateToken = (req, res, next) => {
     next();
   });
 };
-
-// Initialize database
-async function initializeDatabase() {
-  try {
-    await sequelize.authenticate();
-    console.log('✅ Database connection established successfully.');
-    
-    // Sync models
-    await sequelize.sync({ alter: true });
-    console.log('✅ Database models synchronized.');
-    
-    // Seed initial data
-    await seedInitialData();
-    console.log('✅ Initial data seeded successfully.');
-  } catch (error) {
-    console.error('❌ Database initialization failed:', error.message);
-    console.log('🔄 Attempting to continue with limited functionality...');
-    
-    // Try to continue without database for basic functionality
-    try {
-      // Create a minimal in-memory fallback
-      const { Sequelize } = await import('sequelize');
-      const fallbackDb = new Sequelize({
-        dialect: 'sqlite',
-        storage: ':memory:',
-        logging: false,
-      });
-      
-      await fallbackDb.authenticate();
-      console.log('✅ Fallback database initialized');
-    } catch (fallbackError) {
-      console.error('❌ Fallback database also failed:', fallbackError.message);
-      console.log('⚠️  Server will start with mock data only');
-    }
-  }
-}
-
-// Seed initial stock data
-async function seedInitialData() {
-  try {
-    const stocks = [
-      { symbol: 'RELIANCE', name: 'Reliance Industries Limited', sector: 'Energy' },
-      { symbol: 'TCS', name: 'Tata Consultancy Services', sector: 'IT' },
-      { symbol: 'HDFCBANK', name: 'HDFC Bank Limited', sector: 'Banking' },
-      { symbol: 'INFY', name: 'Infosys Limited', sector: 'IT' },
-      { symbol: 'ITC', name: 'ITC Limited', sector: 'FMCG' },
-      { symbol: 'SBIN', name: 'State Bank of India', sector: 'Banking' },
-      { symbol: 'KOTAKBANK', name: 'Kotak Mahindra Bank', sector: 'Banking' },
-      { symbol: 'BHARTIARTL', name: 'Bharti Airtel Limited', sector: 'Telecom' }
-    ];
-
-    for (const stockData of stocks) {
-      await Stock.findOrCreate({
-        where: { symbol: stockData.symbol },
-        defaults: stockData
-      });
-    }
-  } catch (error) {
-    console.warn('⚠️  Could not seed initial data:', error.message);
-    console.log('📊 Application will use mock data for stocks');
-  }
-}
 
 // WebSocket connection handling
 io.on('connection', (socket) => {
@@ -235,107 +147,136 @@ app.get('/api/health', (req, res) => {
     status: 'ok', 
     timestamp: new Date().toISOString(),
     services: {
-      database: 'connected',
+      database: 'mock',
       ai: 'active',
       websocket: 'running'
     }
   });
 });
 
-// Authentication routes (public)
-if (authRoutes) {
-  app.use('/api/auth', authRoutes);
-} else {
-  app.use('/api/auth', (req, res) => {
-    res.status(503).json({ error: 'Authentication service temporarily unavailable' });
-  });
-}
+// Market overview endpoint
+app.get('/api/market/overview', async (req, res) => {
+  try {
+    const marketStatus = getMarketStatus();
+    const topGainers = await getTopMovers('gainers');
+    const topLosers = await getTopMovers('losers');
+    const sectorPerformance = await getSectorPerformance();
+    
+    res.json({
+      marketStatus,
+      indices: {
+        nifty50: {
+          value: 19500 + Math.random() * 1000,
+          change: (Math.random() - 0.5) * 200,
+          changePercent: (Math.random() - 0.5) * 2
+        },
+        sensex: {
+          value: 65000 + Math.random() * 2000,
+          change: (Math.random() - 0.5) * 500,
+          changePercent: (Math.random() - 0.5) * 2
+        }
+      },
+      topGainers,
+      topLosers,
+      sectorPerformance,
+      volume: Math.floor(Math.random() * 1000000000),
+      advances: Math.floor(Math.random() * 2000),
+      declines: Math.floor(Math.random() * 1500)
+    });
+  } catch (error) {
+    console.error('Error fetching market overview:', error);
+    res.status(500).json({ error: 'Failed to fetch market overview' });
+  }
+});
 
-// Market data routes (public)
-if (marketRoutes) {
-  app.use('/api/market', marketRoutes);
-} else {
-  app.use('/api/market', (req, res) => {
-    res.status(503).json({ error: 'Market data service temporarily unavailable' });
-  });
-}
+// Authentication routes (mock)
+app.post('/api/auth/signup', async (req, res) => {
+  try {
+    const { email, password, firstName, lastName } = req.body;
+    
+    if (!email || !password) {
+      return res.status(400).json({ error: 'Email and password are required' });
+    }
+    
+    // Mock user creation
+    const user = {
+      id: Math.random().toString(36).substr(2, 9),
+      email,
+      firstName,
+      lastName,
+      createdAt: new Date().toISOString()
+    };
+    
+    const token = jwt.sign({ userId: user.id, email }, process.env.JWT_SECRET || 'fallback_secret');
+    
+    res.json({ user, token });
+  } catch (error) {
+    console.error('Signup error:', error);
+    res.status(500).json({ error: 'Failed to create account' });
+  }
+});
 
-// Protected routes (require authentication)
-if (portfolioRoutes) {
-  app.use('/api/portfolio', authenticateToken, portfolioRoutes);
-} else {
-  app.use('/api/portfolio', authenticateToken, (req, res) => {
-    res.status(503).json({ error: 'Portfolio service temporarily unavailable' });
-  });
-}
-
-if (watchlistRoutes) {
-  app.use('/api/watchlists', authenticateToken, watchlistRoutes);
-} else {
-  app.use('/api/watchlists', authenticateToken, (req, res) => {
-    res.status(503).json({ error: 'Watchlist service temporarily unavailable' });
-  });
-}
-
-if (alertRoutes) {
-  app.use('/api/alerts', authenticateToken, alertRoutes);
-} else {
-  app.use('/api/alerts', authenticateToken, (req, res) => {
-    res.status(503).json({ error: 'Alert service temporarily unavailable' });
-  });
-}
+app.post('/api/auth/signin', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    
+    if (!email || !password) {
+      return res.status(400).json({ error: 'Email and password are required' });
+    }
+    
+    // Mock user authentication
+    const user = {
+      id: Math.random().toString(36).substr(2, 9),
+      email,
+      firstName: 'Demo',
+      lastName: 'User'
+    };
+    
+    const token = jwt.sign({ userId: user.id, email }, process.env.JWT_SECRET || 'fallback_secret');
+    
+    res.json({ user, token });
+  } catch (error) {
+    console.error('Signin error:', error);
+    res.status(500).json({ error: 'Failed to sign in' });
+  }
+});
 
 // Get all stocks
 app.get('/api/stocks', async (req, res) => {
   try {
-    let stocks = [];
+    // Mock stock data
+    const stocks = [
+      { symbol: 'RELIANCE', name: 'Reliance Industries Limited', sector: 'Energy' },
+      { symbol: 'TCS', name: 'Tata Consultancy Services', sector: 'IT' },
+      { symbol: 'HDFCBANK', name: 'HDFC Bank Limited', sector: 'Banking' },
+      { symbol: 'INFY', name: 'Infosys Limited', sector: 'IT' },
+      { symbol: 'ITC', name: 'ITC Limited', sector: 'FMCG' },
+      { symbol: 'SBIN', name: 'State Bank of India', sector: 'Banking' },
+      { symbol: 'KOTAKBANK', name: 'Kotak Mahindra Bank', sector: 'Banking' },
+      { symbol: 'BHARTIARTL', name: 'Bharti Airtel Limited', sector: 'Telecom' }
+    ];
     
-    try {
-      stocks = await Stock.findAll();
-    } catch (dbError) {
-      console.warn('⚠️  Database unavailable, using mock data');
-      // Return mock data when database is unavailable
-      stocks = [
-        { symbol: 'RELIANCE', name: 'Reliance Industries Limited', sector: 'Energy' },
-        { symbol: 'TCS', name: 'Tata Consultancy Services', sector: 'IT' },
-        { symbol: 'HDFCBANK', name: 'HDFC Bank Limited', sector: 'Banking' },
-        { symbol: 'INFY', name: 'Infosys Limited', sector: 'IT' },
-        { symbol: 'ITC', name: 'ITC Limited', sector: 'FMCG' }
-      ].map(stock => ({
-        ...stock,
-        currentPrice: Math.random() * 1000 + 100,
-        change: (Math.random() - 0.5) * 20,
-        changePercent: (Math.random() - 0.5) * 5,
-        volume: Math.floor(Math.random() * 1000000),
-        toJSON: () => stock
-      }));
-    }
-    
-    // Update with real-time data
-    const updatedStocks = await Promise.all(
-      stocks.map(async (stock) => {
-        try {
-          const realTimeData = await dataProvider.getRealTimeData(stock.symbol);
-          return { ...stock.toJSON(), ...realTimeData };
-        } catch (error) {
-          // Return stock with mock data if real-time data fails
-          return {
-            ...stock.toJSON(),
-            currentPrice: Math.random() * 1000 + 100,
-            change: (Math.random() - 0.5) * 20,
-            changePercent: (Math.random() - 0.5) * 5,
-            volume: Math.floor(Math.random() * 1000000)
-          };
-        }
-      })
-    );
+    // Add mock real-time data
+    const updatedStocks = stocks.map(stock => ({
+      ...stock,
+      currentPrice: Math.random() * 1000 + 100,
+      change: (Math.random() - 0.5) * 20,
+      changePercent: (Math.random() - 0.5) * 5,
+      volume: Math.floor(Math.random() * 1000000),
+      marketCap: Math.floor(Math.random() * 1000000000000),
+      pe: Math.random() * 30 + 5,
+      pb: Math.random() * 5 + 0.5,
+      dividend: Math.random() * 5,
+      high52w: Math.random() * 1200 + 100,
+      low52w: Math.random() * 800 + 50
+    }));
     
     res.json(updatedStocks);
   } catch (error) {
     console.error('Error fetching stocks:', error);
     res.status(500).json({ 
       error: 'Failed to fetch stocks',
-      message: 'Please check your database connection or API configuration'
+      message: 'Using mock data due to service unavailability'
     });
   }
 });
@@ -345,32 +286,21 @@ app.get('/api/stocks/:symbol', async (req, res) => {
   try {
     const { symbol } = req.params;
     
-    // Try to get from database first
-    let stock = await Stock.findOne({ where: { symbol: symbol.toUpperCase() } });
-    
-    if (!stock) {
-      // If not in database, create with real-time data
-      const realTimeData = await dataProvider.getRealTimeData(symbol);
-      if (realTimeData.price > 0) {
-        stock = await Stock.create({
-          symbol: symbol.toUpperCase(),
-          name: realTimeData.name || symbol,
-          currentPrice: realTimeData.price,
-          volume: realTimeData.volume,
-          marketCap: realTimeData.marketCap,
-          pe: realTimeData.pe,
-          pb: realTimeData.pb,
-          dividend: realTimeData.dividend,
-          high52w: realTimeData.high52w,
-          low52w: realTimeData.low52w
-        });
-      } else {
-        return res.status(404).json({ error: 'Stock not found' });
-      }
-    }
-    
     const realTimeData = await dataProvider.getRealTimeData(symbol);
-    res.json({ ...stock.toJSON(), ...realTimeData });
+    const stock = {
+      symbol: symbol.toUpperCase(),
+      name: `${symbol} Company Limited`,
+      sector: 'Technology',
+      ...realTimeData,
+      marketCap: Math.floor(Math.random() * 1000000000000),
+      pe: Math.random() * 30 + 5,
+      pb: Math.random() * 5 + 0.5,
+      dividend: Math.random() * 5,
+      high52w: realTimeData.price * (1 + Math.random() * 0.5),
+      low52w: realTimeData.price * (1 - Math.random() * 0.3)
+    };
+    
+    res.json(stock);
   } catch (error) {
     console.error('Error fetching stock:', error);
     res.status(500).json({ error: 'Failed to fetch stock data' });
@@ -397,34 +327,18 @@ app.get('/api/stocks/search/:query', async (req, res) => {
     const { query } = req.params;
     const { limit = 10 } = req.query;
     
-    let stocks = [];
+    const mockStocks = [
+      { symbol: 'RELIANCE', name: 'Reliance Industries Limited', sector: 'Energy' },
+      { symbol: 'TCS', name: 'Tata Consultancy Services', sector: 'IT' },
+      { symbol: 'HDFCBANK', name: 'HDFC Bank Limited', sector: 'Banking' },
+      { symbol: 'INFY', name: 'Infosys Limited', sector: 'IT' },
+      { symbol: 'ITC', name: 'ITC Limited', sector: 'FMCG' }
+    ];
     
-    if (Stock && Op && Op.or && Op.iLike) {
-      stocks = await Stock.findAll({
-        where: {
-          [Op.or]: [
-            { symbol: { [Op.iLike]: `%${query}%` } },
-            { name: { [Op.iLike]: `%${query}%` } }
-          ]
-        },
-        limit: parseInt(limit),
-        order: [['symbol', 'ASC']]
-      });
-    } else {
-      // Fallback to mock data search
-      const mockStocks = [
-        { symbol: 'RELIANCE', name: 'Reliance Industries Limited', sector: 'Energy' },
-        { symbol: 'TCS', name: 'Tata Consultancy Services', sector: 'IT' },
-        { symbol: 'HDFCBANK', name: 'HDFC Bank Limited', sector: 'Banking' },
-        { symbol: 'INFY', name: 'Infosys Limited', sector: 'IT' },
-        { symbol: 'ITC', name: 'ITC Limited', sector: 'FMCG' }
-      ];
-      
-      stocks = mockStocks.filter(stock => 
-        stock.symbol.toLowerCase().includes(query.toLowerCase()) ||
-        stock.name.toLowerCase().includes(query.toLowerCase())
-      ).slice(0, parseInt(limit));
-    }
+    const stocks = mockStocks.filter(stock => 
+      stock.symbol.toLowerCase().includes(query.toLowerCase()) ||
+      stock.name.toLowerCase().includes(query.toLowerCase())
+    ).slice(0, parseInt(limit));
     
     res.json(stocks);
   } catch (error) {
@@ -461,23 +375,11 @@ app.get('/api/signals', async (req, res) => {
     const { symbol } = req.query;
     
     if (symbol) {
-      // Get signal for specific stock
       const historicalData = await dataProvider.getHistoricalData(symbol, '3m');
       const fundamentalData = await dataProvider.getRealTimeData(symbol);
       const signal = await aiEngine.generateTradingSignal(symbol, historicalData, fundamentalData);
-      
-      // Save to database
-      try {
-        if (TradingSignal) {
-          await TradingSignal.create(signal);
-        }
-      } catch (dbError) {
-        console.warn('Could not save signal to database:', dbError.message);
-      }
-      
       res.json(signal);
     } else {
-      // Get signals for all major stocks
       const majorStocks = ['RELIANCE', 'TCS', 'HDFCBANK', 'INFY'];
       const signals = await Promise.all(
         majorStocks.map(async (stock) => {
@@ -486,7 +388,6 @@ app.get('/api/signals', async (req, res) => {
           return await aiEngine.generateTradingSignal(stock, historicalData, fundamentalData);
         })
       );
-      
       res.json(signals);
     }
   } catch (error) {
@@ -500,22 +401,6 @@ app.get('/api/sentiment/:symbol', async (req, res) => {
   try {
     const { symbol } = req.params;
     const sentimentData = await sentimentAnalysis.analyzeStockSentiment(symbol);
-    
-    // Save to database
-    try {
-      if (SentimentData) {
-        await SentimentData.create({
-          symbol: symbol,
-          source: 'aggregated',
-          sentimentScore: sentimentData.overall,
-          content: JSON.stringify(sentimentData),
-          mentions: sentimentData.mentions
-        });
-      }
-    } catch (dbError) {
-      console.warn('Could not save sentiment data to database:', dbError.message);
-    }
-    
     res.json(sentimentData);
   } catch (error) {
     console.error('Error analyzing sentiment:', error);
@@ -535,22 +420,36 @@ app.get('/api/news', async (req, res) => {
   }
 });
 
-// Social sentiment endpoint
-app.get('/api/sentiment/social/:symbol', async (req, res) => {
-  try {
-    const { symbol } = req.params;
-    const { sources = 'reddit,twitter' } = req.query;
-    
-    const socialSentiment = await sentimentAnalysis.analyzeSocialSentiment(
-      symbol, 
-      sources.split(',')
-    );
-    
-    res.json(socialSentiment);
-  } catch (error) {
-    console.error('Error fetching social sentiment:', error);
-    res.status(500).json({ error: 'Failed to fetch social sentiment' });
-  }
+// Portfolio routes (mock)
+app.get('/api/portfolio', authenticateToken, (req, res) => {
+  res.json({
+    totalValue: 150000,
+    totalInvested: 120000,
+    totalGain: 30000,
+    totalGainPercent: 25,
+    holdings: [
+      {
+        symbol: 'RELIANCE',
+        quantity: 50,
+        avgPrice: 2400,
+        currentPrice: 2500,
+        totalValue: 125000,
+        gain: 5000,
+        gainPercent: 4.17
+      }
+    ]
+  });
+});
+
+// Watchlist routes (mock)
+app.get('/api/watchlists', authenticateToken, (req, res) => {
+  res.json([
+    {
+      id: '1',
+      name: 'My Watchlist',
+      stocks: ['RELIANCE', 'TCS', 'HDFCBANK']
+    }
+  ]);
 });
 
 // Helper functions
@@ -574,7 +473,6 @@ function getMarketStatus() {
 }
 
 async function getTopMovers(type) {
-  // Mock implementation - in production, fetch from real data
   const stocks = ['RELIANCE', 'TCS', 'HDFCBANK', 'INFY', 'ITC'];
   const movers = await Promise.all(
     stocks.map(async (symbol) => {
@@ -603,69 +501,6 @@ async function getSectorPerformance() {
   ];
 }
 
-// Scheduled tasks
-cron.schedule('*/5 * * * *', async () => {
-  // Update stock prices every 5 minutes during market hours
-  const marketStatus = getMarketStatus();
-  if (marketStatus.status === 'Market Open') {
-    console.log('Updating real-time stock prices...');
-    
-    try {
-      const stocks = await Stock.findAll();
-      for (const stock of stocks) {
-        const realTimeData = await dataProvider.getRealTimeData(stock.symbol);
-        
-        // Update database
-        await stock.update({
-          currentPrice: realTimeData.price,
-          volume: realTimeData.volume,
-          updatedAt: new Date()
-        });
-        
-        // Emit to WebSocket clients
-        io.to(stock.symbol).emit('priceUpdate', {
-          symbol: stock.symbol,
-          price: realTimeData.price,
-          change: realTimeData.change,
-          changePercent: realTimeData.changePercent,
-          volume: realTimeData.volume
-        });
-      }
-    } catch (error) {
-      console.error('Error updating stock prices:', error);
-    }
-  }
-});
-
-cron.schedule('0 */2 * * *', async () => {
-  // Generate trading signals every 2 hours
-  console.log('Generating trading signals...');
-  
-  try {
-    const majorStocks = ['RELIANCE', 'TCS', 'HDFCBANK', 'INFY'];
-    
-    for (const symbol of majorStocks) {
-      const historicalData = await dataProvider.getHistoricalData(symbol, '3m');
-      const fundamentalData = await dataProvider.getRealTimeData(symbol);
-      const signal = await aiEngine.generateTradingSignal(symbol, historicalData, fundamentalData);
-      
-      // Save to database
-      try {
-        if (TradingSignal) {
-          await TradingSignal.create(signal);
-        }
-      } catch (dbError) {
-        console.warn('Could not save scheduled signal to database:', dbError.message);
-      }
-      
-      // Emit to WebSocket clients
-      io.emit('newSignal', signal);
-    }
-  } catch (error) {
-    console.error('Error generating scheduled signals:', error);
-  }
-});
-
 // Error handling middleware
 app.use((error, req, res, next) => {
   console.error('Unhandled error:', error);
@@ -677,40 +512,42 @@ app.use((error, req, res, next) => {
 
 const PORT = process.env.PORT || 3001;
 
-// Initialize and start server
+// Start server with proper error handling
 async function startServer() {
   try {
-    await initializeDatabase();
+    server.listen(PORT, () => {
+      console.log(`🚀 AI Trading Assistant Server running on port ${PORT}`);
+      console.log(`📊 WebSocket server ready for real-time connections`);
+      console.log(`🤖 AI Engine initialized with mock data`);
+      console.log(`📈 Data providers configured for Indian markets`);
+      console.log(`💾 Database status: Mock data (development mode)`);
+      console.log(`🌐 Frontend can now connect to: http://localhost:${PORT}`);
+      console.log(`✅ Server is ready to accept connections`);
+    });
   } catch (error) {
-    console.error('❌ Database initialization failed, but continuing with limited functionality');
+    console.error('❌ Failed to start server:', error);
+    process.exit(1);
   }
-  
-  server.listen(PORT, () => {
-    console.log(`🚀 AI Trading Assistant Server running on port ${PORT}`);
-    console.log(`📊 WebSocket server ready for real-time connections`);
-    console.log(`🤖 AI Engine initialized and ready`);
-    console.log(`📈 Data providers configured for Indian markets`);
-    console.log(`💾 Database status: ${sequelize.options.dialect === 'sqlite' ? 'SQLite (development)' : 'PostgreSQL (production)'}`);
-    console.log(`🌐 Frontend can now connect to: http://localhost:${PORT}`);
-    
-    if (process.env.SUPABASE_DB_URL && process.env.SUPABASE_DB_URL.includes('placeholder')) {
-      console.log('\n⚠️  SETUP REQUIRED:');
-      console.log('📋 Please follow the instructions in SETUP_INSTRUCTIONS.md to configure Supabase');
-      console.log('🔗 The app is running with mock data until Supabase is properly configured\n');
-    }
-  });
 }
 
-startServer().catch(console.error);
+startServer().catch((error) => {
+  console.error('❌ Server startup failed:', error);
+  process.exit(1);
+});
 
 // Graceful shutdown
 process.on('SIGTERM', () => {
   console.log('SIGTERM received, shutting down gracefully');
   server.close(() => {
     console.log('Server closed');
-    if (sequelize) {
-      sequelize.close();
-    }
+    process.exit(0);
+  });
+});
+
+process.on('SIGINT', () => {
+  console.log('SIGINT received, shutting down gracefully');
+  server.close(() => {
+    console.log('Server closed');
     process.exit(0);
   });
 });
